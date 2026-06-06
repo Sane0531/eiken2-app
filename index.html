@@ -6,39 +6,22 @@
 <title>英検2級対策アプリ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 :root {
-  --green: #58CC02;
-  --green-dark: #46A302;
-  --green-light: #D7FFB8;
-  --blue: #1CB0F6;
-  --blue-light: #DDF4FF;
-  --yellow: #FFD900;
-  --yellow-dark: #CE9200;
-  --red: #FF4B4B;
-  --red-light: #FFDFE0;
-  --purple: #CE82FF;
-  --purple-light: #F1D0FF;
-  --orange: #FF9600;
-  --bg: #fff;
-  --border: #E5E5E5;
-  --text: #3C3C3C;
-  --text-light: #777;
-  --radius: 16px;
-  --radius-sm: 10px;
+  --green: #58CC02; --green-dark: #46A302; --green-light: #D7FFB8;
+  --blue: #1CB0F6; --blue-light: #DDF4FF;
+  --red: #FF4B4B; --red-light: #FFDFE0;
+  --purple: #CE82FF; --orange: #FF9600;
+  --border: #E5E5E5; --text: #3C3C3C; --text-light: #777;
+  --radius: 16px; --radius-sm: 10px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Nunito', sans-serif; background: #F7F7F7; color: var(--text); }
-.app { max-width: 480px; margin: 0 auto; min-height: 100vh; background: #fff; display: flex; flex-direction: column; position: relative; }
-
-/* NAV */
+.app { max-width: 480px; margin: 0 auto; min-height: 100vh; background: #fff; display: flex; flex-direction: column; }
 .bottom-nav { display: flex; border-top: 2px solid var(--border); background: #fff; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 100; }
 .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0 8px; gap: 3px; cursor: pointer; font-size: 11px; font-weight: 700; color: var(--text-light); border-top: 3px solid transparent; }
 .nav-item.active { color: var(--blue); border-top-color: var(--blue); }
-.nav-item i { font-size: 22px; }
-
-/* SCREENS */
+.nav-icon { font-size: 22px; }
 .screen { display: none; flex: 1; overflow-y: auto; padding-bottom: 80px; }
 .screen.active { display: block; }
 
@@ -47,57 +30,47 @@ body { font-family: 'Nunito', sans-serif; background: #F7F7F7; color: var(--text
 .streak-badge { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 16px; color: var(--orange); }
 .xp-badge { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 16px; color: var(--purple); }
 .gems-badge { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 16px; color: var(--blue); }
-
 .mascot-banner { margin: 16px 20px; background: linear-gradient(135deg, #E6F9FF 0%, #F0FFF0 100%); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 14px; border: 2px solid var(--border); }
 .mascot { font-size: 52px; line-height: 1; }
-.mascot-text h2 { font-size: 15px; font-weight: 800; color: var(--text); }
+.mascot-text h2 { font-size: 15px; font-weight: 800; }
 .mascot-text p { font-size: 13px; color: var(--text-light); margin-top: 2px; font-weight: 600; }
-
-.section-label { font-size: 13px; font-weight: 800; color: var(--text-light); letter-spacing: 0.05em; text-transform: uppercase; padding: 0 20px; margin: 16px 0 8px; }
-
-.unit-path { padding: 0 20px 20px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+.section-label { font-size: 13px; font-weight: 800; color: var(--text-light); letter-spacing: .05em; text-transform: uppercase; padding: 0 20px; margin: 16px 0 8px; }
+.unit-path { padding: 0 20px 20px; display: flex; flex-direction: column; align-items: center; }
 .path-node { display: flex; flex-direction: column; align-items: center; }
-.node-btn { width: 72px; height: 72px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 6px 0 rgba(0,0,0,0.18); transition: transform 0.1s, box-shadow 0.1s; }
-.node-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,0.18); }
+.node-btn { width: 72px; height: 72px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 6px 0 rgba(0,0,0,.18); transition: transform .1s, box-shadow .1s; }
+.node-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,.18); }
 .node-btn.vocab { background: var(--green); }
 .node-btn.listen { background: var(--blue); }
 .node-btn.read { background: var(--purple); }
 .node-connector { width: 4px; height: 28px; background: var(--border); border-radius: 2px; }
 .node-label { font-size: 12px; font-weight: 800; color: var(--text-light); margin-top: 6px; margin-bottom: 2px; }
-.node-stars { display: flex; gap: 2px; margin-bottom: 12px; }
-.node-stars span { font-size: 14px; }
-
+.node-stars { display: flex; gap: 2px; margin-bottom: 12px; font-size: 14px; }
 .daily-goal-card { margin: 8px 20px; background: var(--blue-light); border-radius: var(--radius); padding: 14px 16px; border: 2px solid #B3E5FC; }
 .daily-goal-title { font-size: 13px; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
 .xp-bar-wrap { height: 14px; background: #fff; border-radius: 99px; overflow: hidden; border: 2px solid #B3E5FC; }
-.xp-bar-fill { height: 100%; background: var(--blue); border-radius: 99px; transition: width 0.4s cubic-bezier(.34,1.56,.64,1); }
+.xp-bar-fill { height: 100%; background: var(--blue); border-radius: 99px; transition: width .4s; }
 .xp-bar-label { font-size: 12px; font-weight: 700; color: var(--blue); margin-top: 6px; text-align: right; }
 
 /* LESSON */
 .lesson-header { padding: 16px 20px 0; display: flex; align-items: center; gap: 12px; }
-.back-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-light); }
+.back-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-light); flex-shrink: 0; }
 .lesson-progress-bar { flex: 1; height: 14px; background: #F0F0F0; border-radius: 99px; overflow: hidden; border: 2px solid var(--border); }
-.lesson-progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width 0.4s cubic-bezier(.34,1.56,.64,1); }
-.hearts { display: flex; gap: 4px; }
-
+.lesson-progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width .4s; }
 .lesson-body { padding: 20px; }
-.lesson-type-badge { display: inline-block; background: var(--green-light); color: var(--green-dark); font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
-.lesson-question { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
+.lesson-type-badge { display: inline-block; background: var(--green-light); color: var(--green-dark); font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 99px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
+.lesson-question { font-size: 18px; font-weight: 800; line-height: 1.4; margin-bottom: 8px; }
 .lesson-sub { font-size: 13px; color: var(--text-light); font-weight: 600; font-style: italic; background: #F7F7F7; border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 20px; line-height: 1.6; }
-
 .choices { display: flex; flex-direction: column; gap: 10px; }
-.choice { padding: 14px 16px; border-radius: var(--radius-sm); border: 2px solid var(--border); background: #fff; font-size: 15px; font-weight: 700; cursor: pointer; text-align: left; color: var(--text); transition: border-color 0.15s, background 0.15s; box-shadow: 0 4px 0 var(--border); }
+.choices-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.choice { padding: 14px 16px; border-radius: var(--radius-sm); border: 2px solid var(--border); background: #fff; font-size: 15px; font-weight: 700; cursor: pointer; text-align: left; color: var(--text); box-shadow: 0 4px 0 var(--border); transition: border-color .15s, background .15s; }
 .choice:hover:not([disabled]) { border-color: var(--blue); background: var(--blue-light); }
 .choice.selected { border-color: var(--blue); background: var(--blue-light); box-shadow: 0 4px 0 #B3E5FC; }
 .choice.correct { border-color: var(--green); background: var(--green-light); box-shadow: 0 4px 0 #A0D870; color: var(--green-dark); }
 .choice.wrong { border-color: var(--red); background: var(--red-light); box-shadow: 0 4px 0 #FFACAC; color: var(--red); }
-.choices-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
 .check-btn { width: 100%; padding: 16px; border-radius: var(--radius-sm); border: none; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 16px; }
 .check-btn.ready { background: var(--green); color: #fff; box-shadow: 0 4px 0 var(--green-dark); }
 .check-btn.ready:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--green-dark); }
 .check-btn.disabled { background: #E5E5E5; color: #AFAFAF; box-shadow: 0 4px 0 #CACACA; cursor: default; }
-
 .feedback-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 16px 20px 24px; display: none; z-index: 200; }
 .feedback-bar.show { display: block; }
 .feedback-bar.correct-bar { background: var(--green-light); border-top: 3px solid var(--green); }
@@ -105,54 +78,79 @@ body { font-family: 'Nunito', sans-serif; background: #F7F7F7; color: var(--text
 .fb-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
 .fb-title.ok { color: var(--green-dark); }
 .fb-title.ng { color: var(--red); }
-.fb-body { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px; line-height: 1.6; }
+.fb-body { font-size: 13px; font-weight: 600; margin-bottom: 12px; line-height: 1.6; }
 .fb-next { width: 100%; padding: 14px; border-radius: var(--radius-sm); border: none; font-size: 15px; font-weight: 800; cursor: pointer; }
 .fb-next.ok { background: var(--green); color: #fff; box-shadow: 0 4px 0 var(--green-dark); }
 .fb-next.ng { background: var(--red); color: #fff; box-shadow: 0 4px 0 #CC0000; }
 
 /* COMPLETE */
 .complete-screen { text-align: center; padding: 40px 20px; }
-.complete-emoji { font-size: 80px; margin-bottom: 16px; animation: pop 0.5s cubic-bezier(.34,1.56,.64,1); }
+.complete-emoji { font-size: 80px; margin-bottom: 16px; animation: pop .5s cubic-bezier(.34,1.56,.64,1); }
 @keyframes pop { 0%{transform:scale(0)} 100%{transform:scale(1)} }
-.complete-title { font-size: 26px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+.complete-title { font-size: 26px; font-weight: 900; margin-bottom: 8px; }
 .complete-sub { font-size: 15px; color: var(--text-light); font-weight: 600; margin-bottom: 32px; }
 .stat-row { display: flex; justify-content: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
 .stat-box { background: #F7F7F7; border-radius: var(--radius); padding: 16px 20px; text-align: center; border: 2px solid var(--border); min-width: 80px; }
-.stat-val { font-size: 26px; font-weight: 900; color: var(--text); }
+.stat-val { font-size: 26px; font-weight: 900; }
 .stat-lbl { font-size: 12px; font-weight: 700; color: var(--text-light); margin-top: 2px; }
 .home-btn { padding: 16px 40px; border-radius: var(--radius-sm); border: none; background: var(--green); color: #fff; font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 var(--green-dark); }
 
 /* PROFILE */
 .profile-header { padding: 24px 20px 16px; text-align: center; }
-.avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--purple)); display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 12px; border: 4px solid var(--border); }
+.avatar-wrap { position: relative; display: inline-block; margin-bottom: 12px; }
+.avatar { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--purple)); display: flex; align-items: center; justify-content: center; font-size: 42px; border: 4px solid var(--border); cursor: pointer; }
+.avatar-edit { position: absolute; bottom: 0; right: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid #fff; }
 .profile-name { font-size: 20px; font-weight: 900; }
 .profile-sub { font-size: 13px; color: var(--text-light); font-weight: 600; margin-top: 2px; }
+.edit-btn { margin-top: 10px; padding: 6px 16px; border-radius: 99px; border: 2px solid var(--blue); background: transparent; color: var(--blue); font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
 .stats-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px 16px; }
 .stats-card { background: #F7F7F7; border-radius: var(--radius); padding: 16px; border: 2px solid var(--border); text-align: center; }
 .stats-card-val { font-size: 26px; font-weight: 900; }
 .stats-card-lbl { font-size: 12px; font-weight: 700; color: var(--text-light); margin-top: 2px; }
-.stats-card.streak .stats-card-val { color: var(--orange); }
-.stats-card.xp .stats-card-val { color: var(--purple); }
-.stats-card.correct .stats-card-val { color: var(--green); }
-.stats-card.lessons .stats-card-val { color: var(--blue); }
 .achievements-section { padding: 0 20px 20px; }
 .achievements-title { font-size: 15px; font-weight: 800; margin-bottom: 12px; }
 .badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .badge-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .badge-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; border: 3px solid; }
-.badge-icon.earned { border-color: var(--yellow); background: #FFFDE7; }
-.badge-icon.locked { border-color: var(--border); background: #F7F7F7; filter: grayscale(1) opacity(0.4); }
+.badge-icon.earned { border-color: #FFD900; background: #FFFDE7; }
+.badge-icon.locked { border-color: var(--border); background: #F7F7F7; filter: grayscale(1) opacity(.4); }
 .badge-name { font-size: 10px; font-weight: 700; color: var(--text-light); text-align: center; }
 
 /* READING */
-.passage-box { background: #F7F7F7; border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 16px; font-size: 13.5px; line-height: 1.9; color: var(--text); max-height: 220px; overflow-y: auto; border: 2px solid var(--border); }
-.passage-box p { margin-bottom: 0.7rem; }
+.passage-box { background: #F7F7F7; border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 16px; font-size: 13.5px; line-height: 1.9; max-height: 220px; overflow-y: auto; border: 2px solid var(--border); }
+.passage-box p { margin-bottom: .7rem; }
 .passage-box p:last-child { margin-bottom: 0; }
 .q-nav { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
 .q-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border); background: #fff; font-size: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-light); }
-.q-dot.active { background: var(--blue); color: #fff; border-color: var(--blue); }
-.q-dot.done-ok { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
-.q-dot.done-ng { background: var(--red-light); border-color: var(--red); color: var(--red); }
+.q-dot.q-active { background: var(--blue); color: #fff; border-color: var(--blue); }
+.q-dot.q-ok { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
+.q-dot.q-ng { background: var(--red-light); border-color: var(--red); color: var(--red); }
+
+/* MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 300; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: #fff; border-radius: var(--radius); padding: 24px; width: 90%; max-width: 360px; }
+.modal h3 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+.modal-section { margin-bottom: 16px; }
+.modal-section label { font-size: 13px; font-weight: 700; color: var(--text-light); display: block; margin-bottom: 6px; }
+.modal-input { width: 100%; padding: 10px 12px; border-radius: var(--radius-sm); border: 2px solid var(--border); font-size: 15px; font-family: inherit; color: var(--text); }
+.modal-input:focus { outline: none; border-color: var(--blue); }
+.emoji-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.emoji-opt { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border); background: #F7F7F7; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.emoji-opt.selected { border-color: var(--blue); background: var(--blue-light); }
+.modal-btns { display: flex; gap: 8px; margin-top: 16px; }
+.modal-btn { flex: 1; padding: 12px; border-radius: var(--radius-sm); border: none; font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit; }
+.modal-btn.cancel { background: #F0F0F0; color: var(--text); }
+.modal-btn.save { background: var(--blue); color: #fff; }
+
+/* LISTENING */
+.script-box { background: #F7F7F7; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; font-size: 13px; line-height: 1.8; border: 2px solid var(--border); }
+.audio-player { display: flex; align-items: center; gap: 12px; background: #F0F8FF; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; border: 2px solid #B3E5FC; }
+.play-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); border: none; cursor: pointer; font-size: 18px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.audio-wave { display: flex; align-items: center; gap: 3px; height: 24px; }
+.abar { width: 3px; background: var(--blue); border-radius: 99px; animation: wave 1s ease-in-out infinite; }
+.abar:nth-child(1){height:6px;animation-delay:0s}.abar:nth-child(2){height:14px;animation-delay:.1s}.abar:nth-child(3){height:10px;animation-delay:.2s}.abar:nth-child(4){height:18px;animation-delay:.3s}.abar:nth-child(5){height:12px;animation-delay:.4s}
+@keyframes wave { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.6)} }
 </style>
 </head>
 <body>
@@ -167,40 +165,60 @@ body { font-family: 'Nunito', sans-serif; background: #F7F7F7; color: var(--text
     <button class="fb-next" id="fb-next"></button>
   </div>
 
+  <!-- プロフィール編集モーダル -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+      <h3>プロフィールを編集</h3>
+      <div class="modal-section">
+        <label>表示名</label>
+        <input class="modal-input" id="edit-name" type="text" maxlength="20" placeholder="名前を入力">
+      </div>
+      <div class="modal-section">
+        <label>アイコン</label>
+        <div class="emoji-grid" id="emoji-grid"></div>
+      </div>
+      <div class="modal-btns">
+        <button class="modal-btn cancel" onclick="closeModal()">キャンセル</button>
+        <button class="modal-btn save" onclick="saveProfile()">保存</button>
+      </div>
+    </div>
+  </div>
+
   <div class="bottom-nav">
     <div class="nav-item active" id="nav-home" onclick="showHome()">
-      <i class="ti ti-home"></i>ホーム
+      <span class="nav-icon">🏠</span>ホーム
     </div>
     <div class="nav-item" id="nav-profile" onclick="showProfile()">
-      <i class="ti ti-user-circle"></i>プロフィール
+      <span class="nav-icon">👤</span>プロフィール
     </div>
   </div>
 </div>
 
 <script>
-// ── STATE (localStorage で永続化) ──
-const STORAGE_KEY = 'eiken2_state_v1';
+const STORAGE_KEY = 'eiken2_v2';
+const AVATARS = ['🦜','🦊','🐼','🐯','🦁','🐸','🐧','🐨','🦄','🐉','🐺','🦋'];
 
 let state = {
   xp: 0, streak: 1, gems: 50, hearts: 5,
   lessonsCompleted: 0, totalCorrect: 0, totalAnswered: 0,
   unitsProgress: { vocab: 0, listen: 0, read: 0 },
   lastDate: new Date().toDateString(),
+  profileName: 'がんばり屋さん',
+  profileAvatar: '🦜',
+  selectedAvatar: '🦜',
 };
 
 function loadState() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      const parsed = JSON.parse(saved);
-      // ストリーク更新
+      const p = JSON.parse(saved);
       const today = new Date().toDateString();
-      const last = new Date(parsed.lastDate);
-      const diff = Math.floor((new Date(today) - last) / 86400000);
-      if (diff === 1) { parsed.streak = (parsed.streak || 1) + 1; parsed.hearts = 5; }
-      else if (diff > 1) { parsed.streak = 1; parsed.hearts = 5; }
-      parsed.lastDate = today;
-      state = { ...state, ...parsed };
+      const diff = Math.floor((new Date(today) - new Date(p.lastDate)) / 86400000);
+      if (diff === 1) { p.streak = (p.streak || 1) + 1; p.hearts = 5; }
+      else if (diff > 1) { p.streak = 1; p.hearts = 5; }
+      p.lastDate = today;
+      state = { ...state, ...p };
     }
   } catch(e) {}
 }
@@ -210,89 +228,381 @@ function saveState() {
 }
 
 // ── DATA ──
-const vocabQuestions = [
-  { word: "perceive", phonetic: "/pəˈsiːv/", sentence: 'Many people ___ studying abroad as a great opportunity to grow.', choices: ["知覚する・理解する","拒絶する・断る","悪化させる","依存する"], correct: 0 },
-  { word: "inevitable", phonetic: "/ɪnˈevɪtəbl/", sentence: 'Change is ___; no matter how much we try to resist it, it always comes.', choices: ["避けられない・必然的な","信頼できる","考えられない","効果的な"], correct: 0 },
-  { word: "diminish", phonetic: "/dɪˈmɪnɪʃ/", sentence: 'Lack of sleep can significantly ___ a person\'s ability to concentrate.', choices: ["減少する・弱める","強化する・増大させる","確認する・証明する","分類する・整理する"], correct: 0 },
-  { word: "obligation", phonetic: "/ˌɒblɪˈɡeɪʃn/", sentence: 'Citizens have an ___ to follow the laws of their country.', choices: ["義務・責任","機会・好機","不満・苦情","推測・憶測"], correct: 0 },
-  { word: "consecutive", phonetic: "/kənˈsekjətɪv/", sentence: 'The team won five ___ games, setting a new league record.', choices: ["連続した・続けての","一時的な・瞬間的な","自発的な・任意の","相互的な・互いの"], correct: 0 },
-  { word: "ambiguous", phonetic: "/æmˈbɪɡjuəs/", sentence: 'The instructions were so ___ that no one knew what to do.', choices: ["あいまいな・不明確な","明確な・はっきりした","退屈な・単調な","攻撃的な・好戦的な"], correct: 0 },
-  { word: "compensate", phonetic: "/ˈkɒmpənseɪt/", sentence: 'The company agreed to ___ workers for the extra hours they worked.', choices: ["補償する・埋め合わせる","強調する・力説する","悪化させる・増やす","比較する・対比する"], correct: 0 },
+const vocabData = [
+  { word: "perceive", phonetic: "/pəˈsiːv/", sentence: "Many people ___ studying abroad as a great opportunity.", choices: ["知覚する・理解する","拒絶する・断る","悪化させる","依存する"], correct: 0 },
+  { word: "inevitable", phonetic: "/ɪnˈevɪtəbl/", sentence: "Change is ___; no matter how much we resist it.", choices: ["避けられない・必然的な","信頼できる","考えられない","効果的な"], correct: 0 },
+  { word: "diminish", phonetic: "/dɪˈmɪnɪʃ/", sentence: "Lack of sleep can ___ a person's ability to concentrate.", choices: ["減少する・弱める","強化する・増大させる","確認する","分類する"], correct: 0 },
+  { word: "obligation", phonetic: "/ˌɒblɪˈɡeɪʃn/", sentence: "Citizens have an ___ to follow the laws of their country.", choices: ["義務・責任","機会・好機","不満","推測"], correct: 0 },
+  { word: "consecutive", phonetic: "/kənˈsekjətɪv/", sentence: "The team won five ___ games, setting a new record.", choices: ["連続した","一時的な","自発的な","相互的な"], correct: 0 },
+  { word: "ambiguous", phonetic: "/æmˈbɪɡjuəs/", sentence: "The instructions were so ___ that no one knew what to do.", choices: ["あいまいな・不明確な","明確な","退屈な","攻撃的な"], correct: 0 },
+  { word: "compensate", phonetic: "/ˈkɒmpənseɪt/", sentence: "The company agreed to ___ workers for the extra hours.", choices: ["補償する・埋め合わせる","強調する","悪化させる","比較する"], correct: 0 },
+  { word: "negotiate", phonetic: "/nɪˈɡəʊʃieɪt/", sentence: "Both sides agreed to ___ a new trade agreement.", choices: ["交渉する・協議する","否定する・拒絶する","調査する","規制する"], correct: 0 },
+  { word: "persistent", phonetic: "/pəˈsɪstənt/", sentence: "Despite many failures, her ___ efforts finally paid off.", choices: ["粘り強い・しつこい","一時的な・短命な","寛大な","脆弱な"], correct: 0 },
+  { word: "abolish", phonetic: "/əˈbɒlɪʃ/", sentence: "The government decided to ___ the old tax system.", choices: ["廃止する・撤廃する","設立する・制定する","維持する","強化する"], correct: 0 },
+  { word: "controversy", phonetic: "/ˈkɒntrəvɜːsi/", sentence: "The new policy sparked great ___ among local residents.", choices: ["論争・議論","協力・協調","成功・達成","遠慮・謙虚さ"], correct: 0 },
+  { word: "deteriorate", phonetic: "/dɪˈtɪəriəreɪt/", sentence: "His health began to ___ after he stopped taking his medicine.", choices: ["悪化する・低下する","改善する・向上する","集中する","推測する"], correct: 0 },
+  { word: "distribute", phonetic: "/dɪˈstrɪbjuːt/", sentence: "Volunteers helped ___ food and water to those affected by the flood.", choices: ["配布する・分配する","禁止する・制限する","評価する","収集する"], correct: 0 },
+  { word: "magnificent", phonetic: "/mæɡˈnɪfɪsnt/", sentence: "The view from the mountaintop was absolutely ___.", choices: ["壮大な・素晴らしい","平凡な・ありきたりな","不安定な","厳格な"], correct: 0 },
+  { word: "resign", phonetic: "/rɪˈzaɪn/", sentence: "The manager decided to ___ after disagreements with the board.", choices: ["辞職する・辞任する","再開する・再び始める","設計する","署名する"], correct: 0 },
+  { word: "prospect", phonetic: "/ˈprɒspekt/", sentence: "The ___ of working overseas excited her more than any other option.", choices: ["見込み・可能性","障害・困難","証拠・根拠","負担・義務"], correct: 0 },
+  { word: "adequate", phonetic: "/ˈædɪkwət/", sentence: "Make sure you get ___ sleep before the exam.", choices: ["十分な・適切な","過剰な・必要以上の","不十分な","不規則な"], correct: 0 },
+  { word: "apparent", phonetic: "/əˈpærənt/", sentence: "It was ___ that she was nervous from the moment she entered.", choices: ["明らかな・見かけ上の","不明な・曖昧な","重要な","珍しい"], correct: 0 },
+  { word: "promote", phonetic: "/prəˈməʊt/", sentence: "The campaign was designed to ___ healthy eating habits among teens.", choices: ["促進する・宣伝する","妨害する・阻止する","削減する","批判する"], correct: 0 },
+  { word: "implement", phonetic: "/ˈɪmplɪment/", sentence: "The school decided to ___ a new grading system next semester.", choices: ["実施する・導入する","廃止する・取り消す","延期する","調査する"], correct: 0 },
+  { word: "assume", phonetic: "/əˈsjuːm/", sentence: "Do not ___ that everyone agrees with your opinion.", choices: ["思い込む・仮定する","否定する・拒否する","証明する","確認する"], correct: 0 },
+  { word: "obtain", phonetic: "/əbˈteɪn/", sentence: "She worked hard to ___ a scholarship for her university education.", choices: ["手に入れる・取得する","失う・手放す","借りる","返却する"], correct: 0 },
+  { word: "sustainable", phonetic: "/səˈsteɪnəbl/", sentence: "The company aims to develop ___ energy sources for the future.", choices: ["持続可能な・環境に優しい","一時的な・短期的な","費用のかかる","危険な"], correct: 0 },
+  { word: "emphasize", phonetic: "/ˈemfəsaɪz/", sentence: "The teacher always ___ the importance of reading regularly.", choices: ["強調する・力説する","否定する・軽視する","省略する","繰り返す"], correct: 0 },
+  { word: "reflect", phonetic: "/rɪˈflekt/", sentence: "The results ___ the hard work that students put into the project.", choices: ["反映する・示す","隠す・覆い隠す","否定する","変更する"], correct: 0 },
+  { word: "generous", phonetic: "/ˈdʒenərəs/", sentence: "It was very ___ of him to donate so much money to the charity.", choices: ["寛大な・気前のいい","けちな・ひどい","厳格な","慎重な"], correct: 0 },
+  { word: "acknowledge", phonetic: "/əkˈnɒlɪdʒ/", sentence: "She refused to ___ that she had made a mistake.", choices: ["認める・気づく","否定する・無視する","隠す","忘れる"], correct: 0 },
+  { word: "fundamental", phonetic: "/ˌfʌndəˈmentl/", sentence: "Access to clean water is a ___ human right.", choices: ["根本的な・基本的な","二次的な・副次的な","複雑な","一時的な"], correct: 0 },
+  { word: "estimate", phonetic: "/ˈestɪmət/", sentence: "Scientists ___ that the population will reach 10 billion by 2050.", choices: ["推定する・見積もる","証明する・確認する","否定する","増加する"], correct: 0 },
+  { word: "whereas", phonetic: "/weərˈæz/", sentence: "Some students prefer group work, ___ others like studying alone.", choices: ["〜である一方で","〜なので・だから","〜にもかかわらず","〜の結果として"], correct: 0 },
+  { word: "reluctant", phonetic: "/rɪˈlʌktənt/", sentence: "She was ___ to accept the offer without reading the contract first.", choices: ["気が進まない・嫌がる","熱心な・意欲的な","驚いた","満足した"], correct: 0 },
+  { word: "regulate", phonetic: "/ˈreɡjuleɪt/", sentence: "The government plans to ___ the use of social media by minors.", choices: ["規制する・取り締まる","奨励する・推進する","無視する","拡大する"], correct: 0 },
+  { word: "contribution", phonetic: "/ˌkɒntrɪˈbjuːʃn/", sentence: "Her ___ to the research project was recognized by the entire team.", choices: ["貢献・寄付","妨害・邪魔","批判・非難","疑問・質問"], correct: 0 },
+  { word: "consequence", phonetic: "/ˈkɒnsɪkwəns/", sentence: "Failing to study regularly can have serious ___ on your grades.", choices: ["結果・影響","原因・理由","計画・目標","規則・法律"], correct: 0 },
+  { word: "distinguish", phonetic: "/dɪˈstɪŋɡwɪʃ/", sentence: "It can be hard to ___ between genuine and artificial flavors.", choices: ["区別する・識別する","混乱させる","組み合わせる","強調する"], correct: 0 },
+  { word: "evaluate", phonetic: "/ɪˈvæljueɪt/", sentence: "Teachers must ___ each student's progress throughout the year.", choices: ["評価する・査定する","無視する","確認する","変更する"], correct: 0 },
+  { word: "flexible", phonetic: "/ˈfleksɪbl/", sentence: "A ___ work schedule allows employees to manage their time better.", choices: ["柔軟な・融通のきく","厳格な・固定された","複雑な","不安定な"], correct: 0 },
+  { word: "sufficient", phonetic: "/səˈfɪʃnt/", sentence: "Is the evidence ___ to support your argument?", choices: ["十分な・足りる","不十分な・足りない","過剰な","不明確な"], correct: 0 },
+  { word: "temporary", phonetic: "/ˈtempərəri/", sentence: "The road closure is only ___ and will end by next week.", choices: ["一時的な・仮の","永続的な・恒久的な","緊急の","定期的な"], correct: 0 },
+  { word: "significant", phonetic: "/sɪɡˈnɪfɪkənt/", sentence: "There has been a ___ increase in the number of online shoppers.", choices: ["重要な・著しい","わずかな・ほとんどない","一般的な","予測できない"], correct: 0 },
+  { word: "contradict", phonetic: "/ˌkɒntrəˈdɪkt/", sentence: "His later statement seemed to ___ what he had said earlier.", choices: ["矛盾する・否定する","支持する・確認する","強調する","省略する"], correct: 0 },
+  { word: "voluntary", phonetic: "/ˈvɒləntəri/", sentence: "Participation in the survey is entirely ___.", choices: ["自発的な・任意の","強制的な・義務的な","定期的な","公式の"], correct: 0 },
+  { word: "equivalent", phonetic: "/ɪˈkwɪvələnt/", sentence: "One kilogram is ___ to approximately 2.2 pounds.", choices: ["同等の・相当する","反対の・逆の","優れた・上回る","劣った・下回る"], correct: 0 },
+  { word: "anticipate", phonetic: "/ænˈtɪsɪpeɪt/", sentence: "We ___ a large number of visitors during the summer festival.", choices: ["予想する・見越す","驚く・戸惑う","避ける","確認する"], correct: 0 },
+  { word: "demonstrate", phonetic: "/ˈdemənstreɪt/", sentence: "The experiment was designed to ___ how light travels through glass.", choices: ["実証する・示す","隠す","否定する","複雑にする"], correct: 0 },
+  { word: "vulnerable", phonetic: "/ˈvʌlnərəbl/", sentence: "Elderly people are often more ___ to serious illness during winter.", choices: ["傷つきやすい・弱い","抵抗力のある・強い","活動的な","慎重な"], correct: 0 },
+  { word: "commit", phonetic: "/kəˈmɪt/", sentence: "The organization has ___ itself to reducing carbon emissions by 2030.", choices: ["誓約する・専念する","拒否する","躊躇する","省略する"], correct: 0 },
+  { word: "extensive", phonetic: "/ɪkˈstensɪv/", sentence: "The researchers conducted ___ surveys across ten different countries.", choices: ["広範な・大規模な","限定的な・小規模な","一時的な","単純な"], correct: 0 },
+  { word: "exception", phonetic: "/ɪkˈsepʃn/", sentence: "All students must attend, with no ___ for late arrivals.", choices: ["例外・除外","規則・法律","問題・障害","解決策"], correct: 0 },
+  { word: "enhance", phonetic: "/ɪnˈhɑːns/", sentence: "Regular exercise can ___ both physical and mental well-being.", choices: ["高める・向上させる","低下させる・弱める","維持する","変更する"], correct: 0 },
+  { word: "access", phonetic: "/ˈækses/", sentence: "Not all students have equal ___ to high-quality education.", choices: ["アクセス・利用できること","障害・妨害","コスト・費用","結果・成果"], correct: 0 },
+  { word: "efficient", phonetic: "/ɪˈfɪʃnt/", sentence: "An ___ public transport system can reduce traffic congestion.", choices: ["効率的な・能率的な","非効率な・無駄な","危険な","複雑な"], correct: 0 },
+  { word: "conflict", phonetic: "/ˈkɒnflɪkt/", sentence: "There was a serious ___ between the two departments over budget cuts.", choices: ["衝突・対立","協力・協調","解決・和解","計画・戦略"], correct: 0 },
+  { word: "preserve", phonetic: "/prɪˈzɜːv/", sentence: "It is important to ___ traditional customs for future generations.", choices: ["保存する・守る","破壊する・消滅させる","変更する","記録する"], correct: 0 },
+  { word: "obtain", phonetic: "/əbˈteɪn/", sentence: "You must ___ a visa before traveling to certain countries.", choices: ["取得する・入手する","失う・手放す","更新する","提出する"], correct: 0 },
+  { word: "urgent", phonetic: "/ˈɜːdʒənt/", sentence: "The doctor said the patient needed ___ medical attention.", choices: ["緊急の・急を要する","軽微な・重要でない","予定された","自発的な"], correct: 0 },
+  { word: "rely", phonetic: "/rɪˈlaɪ/", sentence: "Many rural communities ___ on agriculture for their income.", choices: ["頼る・依存する","避ける・拒否する","疑う","誤解する"], correct: 0 },
+  { word: "expand", phonetic: "/ɪkˈspænd/", sentence: "The company plans to ___ its operations into new markets next year.", choices: ["拡大する・広げる","縮小する・減らす","撤退する","維持する"], correct: 0 },
+  { word: "exception", phonetic: "/ɪkˈsepʃn/", sentence: "With the ___ of Tom, everyone passed the final exam.", choices: ["例外・除外","追加・補足","理由・原因","条件・前提"], correct: 0 },
+  { word: "crucial", phonetic: "/ˈkruːʃl/", sentence: "It is ___ to back up your data regularly to avoid losing files.", choices: ["非常に重要な・決定的な","重要でない・わずかな","難しい","簡単な"], correct: 0 },
+  { word: "tolerate", phonetic: "/ˈtɒləreɪt/", sentence: "Some plants can ___ extreme temperatures better than others.", choices: ["耐える・容認する","避ける","好む","必要とする"], correct: 0 },
+  { word: "interpret", phonetic: "/ɪnˈtɜːprɪt/", sentence: "It can be difficult to ___ data without the proper context.", choices: ["解釈する・説明する","無視する","記録する","比較する"], correct: 0 },
+  { word: "isolate", phonetic: "/ˈaɪsəleɪt/", sentence: "Scientists were able to ___ the virus responsible for the outbreak.", choices: ["分離する・孤立させる","結合する・組み合わせる","広める","保存する"], correct: 0 },
+  { word: "rational", phonetic: "/ˈræʃənl/", sentence: "It is important to make ___ decisions based on facts, not emotions.", choices: ["合理的な・理にかなった","感情的な・衝動的な","複雑な","予測できない"], correct: 0 },
+  { word: "oppose", phonetic: "/əˈpəʊz/", sentence: "Many citizens ___ the construction of a new highway through the park.", choices: ["反対する・対抗する","支持する・賛成する","無視する","促進する"], correct: 0 },
+  { word: "welfare", phonetic: "/ˈwelfeə/", sentence: "The government introduced new policies to improve the ___ of elderly citizens.", choices: ["福祉・幸福","負担・コスト","危険・リスク","規制・制限"], correct: 0 },
+  { word: "accurate", phonetic: "/ˈækjərət/", sentence: "It is important that the report contains ___ information.", choices: ["正確な・精密な","不正確な・誤った","一般的な","詳細な"], correct: 0 },
+  { word: "decade", phonetic: "/ˈdekeɪd/", sentence: "Over the past ___, technology has changed our daily lives dramatically.", choices: ["10年間","1年間","100年間","1ヶ月間"], correct: 0 },
+  { word: "predict", phonetic: "/prɪˈdɪkt/", sentence: "Weather forecasters try to ___ rainfall up to a week in advance.", choices: ["予測する・予言する","確認する","否定する","観察する"], correct: 0 },
+  { word: "motivate", phonetic: "/ˈməʊtɪveɪt/", sentence: "A good teacher knows how to ___ students to do their best.", choices: ["やる気にさせる・動機づける","落胆させる・やる気をなくさせる","評価する","叱る"], correct: 0 },
+  { word: "diverse", phonetic: "/daɪˈvɜːs/", sentence: "Our school has a ___ student population from many different countries.", choices: ["多様な・様々な","均一な・同質的な","限られた","伝統的な"], correct: 0 },
+  { word: "barrier", phonetic: "/ˈbæriə/", sentence: "Language can be a significant ___ to communication in a foreign country.", choices: ["障壁・妨害","助け・サポート","解決策","機会"], correct: 0 },
+  { word: "abandon", phonetic: "/əˈbændən/", sentence: "The team decided to ___ the project after losing their funding.", choices: ["断念する・捨てる","続ける・維持する","改善する","開始する"], correct: 0 },
+  { word: "convince", phonetic: "/kənˈvɪns/", sentence: "She tried to ___ her parents to let her study abroad.", choices: ["説得する・納得させる","反対する","諦める","無視する"], correct: 0 },
+  { word: "appropriate", phonetic: "/əˈprəʊpriət/", sentence: "Please wear ___ clothing for the formal dinner.", choices: ["適切な・ふさわしい","不適切な・ふさわしくない","普通の","高価な"], correct: 0 },
+  { word: "authority", phonetic: "/ɔːˈθɒrɪti/", sentence: "The local ___ decided to build a new sports facility in the town.", choices: ["当局・権限","住民・市民","企業・会社","個人・個人"], correct: 0 },
+  { word: "financial", phonetic: "/faɪˈnænʃl/", sentence: "Many students struggle with ___ difficulties while attending university.", choices: ["財政的な・金銭的な","身体的な","感情的な","社会的な"], correct: 0 },
+  { word: "species", phonetic: "/ˈspiːʃiːz/", sentence: "Several ___ of birds have become extinct due to habitat destruction.", choices: ["種（生物の）","地域・地帯","季節","年齢層"], correct: 0 },
+  { word: "survey", phonetic: "/ˈsɜːveɪ/", sentence: "The researchers conducted a ___ of over 1,000 households.", choices: ["調査・アンケート","実験","観察","報告書"], correct: 0 },
+  { word: "principle", phonetic: "/ˈprɪnsɪpl/", sentence: "Honesty is one of the most important ___ in any business.", choices: ["原則・信条","例外・規則外れ","慣習・習慣","費用・コスト"], correct: 0 },
+  { word: "authority", phonetic: "/ɔːˈθɒrɪti/", sentence: "She spoke with great ___ on the subject of climate change.", choices: ["権威・専門性","不確かさ","謙遜","驚き"], correct: 0 },
+  { word: "restore", phonetic: "/rɪˈstɔː/", sentence: "Volunteers worked together to ___ the historic building to its original state.", choices: ["修復する・元に戻す","破壊する","建設する","移動する"], correct: 0 },
+  { word: "initiative", phonetic: "/ɪˈnɪʃətɪv/", sentence: "The government launched a new ___ to promote renewable energy.", choices: ["取り組み・主導権","妨害・障害","批判","反対意見"], correct: 0 },
+  { word: "potential", phonetic: "/pəˈtenʃl/", sentence: "She has the ___ to become one of the best athletes in the country.", choices: ["可能性・潜在能力","限界・制限","経験","才能の欠如"], correct: 0 },
+  { word: "launch", phonetic: "/lɔːntʃ/", sentence: "The company plans to ___ its new product line next spring.", choices: ["発売する・開始する","中止する・撤回する","延期する","改善する"], correct: 0 },
+  { word: "entire", phonetic: "/ɪnˈtaɪə/", sentence: "The ___ team worked overtime to meet the deadline.", choices: ["全体の・すべての","一部の","限られた","特定の"], correct: 0 },
+  { word: "visible", phonetic: "/ˈvɪzɪbl/", sentence: "The damage to the building was clearly ___ from the street.", choices: ["目に見える・明らかな","見えない・隠れた","不明確な","複雑な"], correct: 0 },
+  { word: "alternative", phonetic: "/ɔːlˈtɜːnətɪv/", sentence: "If you cannot attend in person, there is an ___ online option.", choices: ["代替の・別の","唯一の","強制的な","最良の"], correct: 0 },
+  { word: "restrict", phonetic: "/rɪˈstrɪkt/", sentence: "New laws will ___ the amount of sugar allowed in soft drinks.", choices: ["制限する・規制する","促進する・奨励する","廃止する","記録する"], correct: 0 },
+  { word: "approval", phonetic: "/əˈpruːvl/", sentence: "The plan received ___ from the board of directors.", choices: ["承認・賛成","反対・拒絶","修正・変更","延期"], correct: 0 },
+  { word: "innocent", phonetic: "/ˈɪnəsnt/", sentence: "The court found the defendant ___ of all charges.", choices: ["無実の・無罪の","有罪の","疑わしい","危険な"], correct: 0 },
+  { word: "phenomenon", phonetic: "/fɪˈnɒmɪnən/", sentence: "Climate change is a global ___ that affects every country.", choices: ["現象・事象","解決策","原因","計画"], correct: 0 },
+  { word: "construct", phonetic: "/kənˈstrʌkt/", sentence: "The city plans to ___ a new bridge over the river.", choices: ["建設する・構築する","破壊する・壊す","移動する","維持する"], correct: 0 },
+  { word: "circumstance", phonetic: "/ˈsɜːkəmstəns/", sentence: "Under normal ___, the process takes about two weeks.", choices: ["状況・事情","結果・影響","計画・目標","原因・理由"], correct: 0 },
+  { word: "incorporate", phonetic: "/ɪnˈkɔːpəreɪt/", sentence: "The designer decided to ___ traditional patterns into the modern design.", choices: ["取り入れる・組み込む","除外する・取り除く","変更する","強調する"], correct: 0 },
+  { word: "dominate", phonetic: "/ˈdɒmɪneɪt/", sentence: "One company has come to ___ the entire smartphone market.", choices: ["支配する・独占する","従う・服従する","協力する","競争する"], correct: 0 },
+  { word: "ethical", phonetic: "/ˈeθɪkl/", sentence: "There are serious ___ questions about using animals in experiments.", choices: ["倫理的な・道徳的な","非倫理的な","法律的な","経済的な"], correct: 0 },
+  { word: "profound", phonetic: "/prəˈfaʊnd/", sentence: "The experience had a ___ impact on her understanding of other cultures.", choices: ["深い・重大な","浅い・軽微な","一時的な","予測できた"], correct: 0 },
+  { word: "contaminate", phonetic: "/kənˈtæmɪneɪt/", sentence: "Industrial waste can ___ nearby rivers and harm wildlife.", choices: ["汚染する・汚す","浄化する・きれいにする","保護する","調査する"], correct: 0 },
+  { word: "abandon", phonetic: "/əˈbændən/", sentence: "He had to ___ his original plan when he ran out of money.", choices: ["断念する・放棄する","続ける","改善する","変更する"], correct: 0 },
+  { word: "dedicate", phonetic: "/ˈdedɪkeɪt/", sentence: "She has ___ her career to helping underprivileged children.", choices: ["捧げる・専念する","断念する","批判する","評価する"], correct: 0 },
+  { word: "transition", phonetic: "/trænˈzɪʃn/", sentence: "The country is going through a ___ from a manufacturing to a service economy.", choices: ["移行・変遷","停滞・停止","危機・問題","発展・成長"], correct: 0 },
+  { word: "accelerate", phonetic: "/əkˈseləreɪt/", sentence: "New technology has helped to ___ the pace of scientific discovery.", choices: ["加速する・促進する","減速する・遅らせる","停止する","維持する"], correct: 0 },
+  { word: "inspire", phonetic: "/ɪnˈspaɪə/", sentence: "Her story of overcoming hardship ___ thousands of people around the world.", choices: ["鼓舞する・刺激する","落胆させる","批判する","無視する"], correct: 0 },
+  { word: "substantial", phonetic: "/səbˈstænʃl/", sentence: "There has been a ___ improvement in air quality since the new laws came into effect.", choices: ["かなりの・実質的な","わずかな・ほんのわずかの","一時的な","予期しない"], correct: 0 },
+  { word: "migration", phonetic: "/maɪˈɡreɪʃn/", sentence: "The ___ of workers from rural to urban areas has increased rapidly.", choices: ["移住・移動","定住・定着","帰還・戻ること","孤立・孤独"], correct: 0 },
+  { word: "expose", phonetic: "/ɪkˈspəʊz/", sentence: "Children who are ___ to multiple languages early often become fluent speakers.", choices: ["さらす・接触させる","保護する・守る","隠す","避ける"], correct: 0 },
+  { word: "implication", phonetic: "/ˌɪmplɪˈkeɪʃn/", sentence: "The study has serious ___ for how we think about diet and health.", choices: ["意味・影響","解決策","原因","例外"], correct: 0 },
+  { word: "innovate", phonetic: "/ˈɪnəveɪt/", sentence: "Companies that fail to ___ often struggle to survive in competitive markets.", choices: ["革新する・新しいものを生み出す","維持する・保持する","縮小する","模倣する"], correct: 0 },
+  { word: "consent", phonetic: "/kənˈsent/", sentence: "Doctors must obtain the patient's ___ before performing any surgery.", choices: ["同意・承認","反対・拒否","記録","診断"], correct: 0 },
+  { word: "adequate", phonetic: "/ˈædɪkwət/", sentence: "The students did not receive ___ support from their school.", choices: ["十分な・適切な","過剰な","不必要な","特別な"], correct: 0 },
+  { word: "combat", phonetic: "/ˈkɒmbæt/", sentence: "New measures are being introduced to ___ online fraud.", choices: ["戦う・対処する","促進する","無視する","記録する"], correct: 0 },
+  { word: "shift", phonetic: "/ʃɪft/", sentence: "There has been a significant ___ in public opinion on the issue.", choices: ["変化・転換","維持・継続","問題・障害","計画・戦略"], correct: 0 },
+  { word: "interpret", phonetic: "/ɪnˈtɜːprɪt/", sentence: "How you ___ the results depends on your point of view.", choices: ["解釈する・説明する","否定する","記録する","変更する"], correct: 0 },
+  { word: "emerge", phonetic: "/ɪˈmɜːdʒ/", sentence: "New evidence began to ___ after a second investigation was conducted.", choices: ["出てくる・現れる","消える・なくなる","増加する","減少する"], correct: 0 },
+  { word: "threaten", phonetic: "/ˈθretn/", sentence: "Rising sea levels ___ to flood many coastal cities within decades.", choices: ["脅かす・危険にさらす","守る・保護する","改善する","無視する"], correct: 0 },
+  { word: "collapse", phonetic: "/kəˈlæps/", sentence: "The bridge was so old that it finally ___ under the weight of traffic.", choices: ["崩壊する・倒れる","建設される","修復される","強化される"], correct: 0 },
+  { word: "eliminate", phonetic: "/ɪˈlɪmɪneɪt/", sentence: "The new system aims to ___ unnecessary paperwork.", choices: ["排除する・なくす","増やす","維持する","導入する"], correct: 0 },
+  { word: "demonstrate", phonetic: "/ˈdemənstreɪt/", sentence: "The protest was held to ___ against the new housing policy.", choices: ["示す・デモを行う","賛成する","支持する","無視する"], correct: 0 },
+  { word: "minimize", phonetic: "/ˈmɪnɪmaɪz/", sentence: "Wearing sunscreen helps to ___ the risk of skin damage.", choices: ["最小限にする・減らす","最大限にする","無視する","強調する"], correct: 0 },
+  { word: "propose", phonetic: "/prəˈpəʊz/", sentence: "The committee ___ several changes to the existing policy.", choices: ["提案する・提起する","反対する","承認する","延期する"], correct: 0 },
+  { word: "abandon", phonetic: "/əˈbændən/", sentence: "Rising costs forced the company to ___ the new factory project.", choices: ["断念する・放棄する","完成させる","拡大する","計画する"], correct: 0 },
+  { word: "sufficient", phonetic: "/səˈfɪʃnt/", sentence: "One hour of exercise a day is ___ to maintain a healthy lifestyle.", choices: ["十分な","不十分な","過剰な","最低限の"], correct: 0 },
+  { word: "outcome", phonetic: "/ˈaʊtkʌm/", sentence: "The ___ of the negotiations surprised everyone.", choices: ["結果・成果","原因・理由","計画・目標","問題・課題"], correct: 0 },
+  { word: "indicate", phonetic: "/ˈɪndɪkeɪt/", sentence: "The data ___ that more people are choosing to work from home.", choices: ["示す・指し示す","否定する","増加させる","無視する"], correct: 0 },
+  { word: "contribute", phonetic: "/kənˈtrɪbjuːt/", sentence: "Regular exercise can ___ to a longer and healthier life.", choices: ["貢献する・一因となる","妨げる・邪魔する","保証する","記録する"], correct: 0 },
+  { word: "stable", phonetic: "/ˈsteɪbl/", sentence: "The economy remained ___ despite the rise in oil prices.", choices: ["安定した・変わらない","不安定な・変動する","成長している","衰退している"], correct: 0 },
+  { word: "priority", phonetic: "/praɪˈɒrɪti/", sentence: "Education should be a top ___ for any government.", choices: ["優先事項・重要課題","副次的事項","選択肢","問題点"], correct: 0 },
+  { word: "penalty", phonetic: "/ˈpenəlti/", sentence: "There is a heavy ___ for those caught littering in public spaces.", choices: ["罰・罰金","報酬・報い","警告","義務"], correct: 0 },
+  { word: "conscious", phonetic: "/ˈkɒnʃəs/", sentence: "She is very ___ of the need to reduce her carbon footprint.", choices: ["意識している・気づいている","無意識の","無関心な","驚いた"], correct: 0 },
+  { word: "tendency", phonetic: "/ˈtendənsi/", sentence: "There is a ___ for people to spend more when shopping online.", choices: ["傾向・習慣","例外","障害","解決策"], correct: 0 },
+  { word: "justify", phonetic: "/ˈdʒʌstɪfaɪ/", sentence: "It is hard to ___ spending so much money on a product that breaks easily.", choices: ["正当化する・理由をつける","批判する","無視する","認める"], correct: 0 },
+  { word: "collapse", phonetic: "/kəˈlæps/", sentence: "The entire financial system was on the verge of ___.", choices: ["崩壊・倒壊","回復","成長","安定"], correct: 0 },
+  { word: "reform", phonetic: "/rɪˈfɔːm/", sentence: "The government announced plans to ___ the education system.", choices: ["改革する・改善する","維持する","廃止する","批判する"], correct: 0 },
+  { word: "interaction", phonetic: "/ˌɪntərˈækʃn/", sentence: "Face-to-face ___ is still important even in a digital world.", choices: ["交流・相互作用","孤立","競争","対立"], correct: 0 },
+  { word: "resolve", phonetic: "/rɪˈzɒlv/", sentence: "Both parties agreed to ___ their differences through peaceful dialogue.", choices: ["解決する・決心する","悪化させる","無視する","延期する"], correct: 0 },
+  { word: "mutual", phonetic: "/ˈmjuːtʃuəl/", sentence: "The two companies signed an agreement based on ___ benefit.", choices: ["相互の・共通の","一方的な","条件付きの","強制的な"], correct: 0 },
+  { word: "cope", phonetic: "/kəʊp/", sentence: "It can be difficult to ___ with stress during exam season.", choices: ["対処する・うまく処理する","無視する","避ける","悪化させる"], correct: 0 },
+  { word: "exploit", phonetic: "/ɪkˈsplɔɪt/", sentence: "Some companies ___ natural resources without considering the environmental impact.", choices: ["搾取する・利用する","保護する","維持する","観察する"], correct: 0 },
+  { word: "diversity", phonetic: "/daɪˈvɜːsɪti/", sentence: "Cultural ___ can be a great strength in any workplace.", choices: ["多様性","均一性","孤立","伝統"], correct: 0 },
 ];
 
-const listeningQuestions = [
-  { title: "会話 1 — 大学にて", script: ["W: Professor, I've been struggling with the essay assignment.", "M: Have you done all the required readings? Your argument should come from those sources.", "W: I've read most of them, but I'm not sure how to connect them.", "M: Try identifying the common themes first. Then build your argument around those."], q: "What does the professor suggest the student do first?", choices: ["Submit a draft before class", "Read more sources online", "Find common themes in the readings", "Visit the library immediately"], correct: 2, ex: '"Try identifying the common themes first" が根拠。まず共通テーマを見つけることを勧めています。' },
-  { title: "会話 2 — 電話にて", script: ["M: I'd like to book a table for four this Saturday evening.", "W: I'm sorry, we're fully booked on Saturday. We have availability on Friday or Sunday lunch.", "M: Friday won't work. What time is Sunday lunch available?", "W: We have slots at 12:00 and 1:30."], q: "Why can't the man book a table on Saturday?", choices: ["The restaurant is closed on Saturdays", "He is unavailable on Saturday", "No tables are left on Saturday", "Only online bookings are accepted"], correct: 2, ex: '"fully booked on Saturday" = 満席。"No tables are left" が正解の言い換えです。' },
-  { title: "会話 3 — 会社にて", script: ["W: Did you see the announcement about the new environmental policy?", "M: Yes. The company is going to stop using plastic cups and bottles in all offices by next month.", "W: I heard they're also planning to install solar panels on the roof.", "M: Really? It sounds like they're taking sustainability seriously."], q: "What change will the company make by next month?", choices: ["Install solar panels on the roof", "Reduce the number of employees", "Replace plastic cups and bottles with alternatives", "Switch to a fully remote working model"], correct: 2, ex: '"stop using plastic cups and bottles in all offices by next month" が直接の根拠です。' },
-  { title: "会話 4 — 駅にて", script: ["M: Excuse me, I think I left my backpack on the train. It arrived at this platform about ten minutes ago.", "W: You'll need to go to the Lost and Found office on the second floor.", "M: Is there a chance it's already been sent there?", "W: If a staff member found it, yes. The train departs again in about 20 minutes, so please hurry."], q: "What does the woman advise the man to do?", choices: ["Wait at the platform for the next train", "Call the train company's customer service", "Go to the Lost and Found office on the second floor", "Ask other passengers if they saw his backpack"], correct: 2, ex: '"You\'ll need to go to the Lost and Found office on the second floor" — 2階の遺失物取扱所に行くよう案内しています。' },
-  { title: "会話 5 — 病院にて", script: ["W: Dr. Kato, I've been having headaches every morning for two weeks.", "M: Are you sleeping well? And how much water are you drinking each day?", "W: I get about five hours of sleep and maybe one or two glasses of water.", "M: I'd like you to try getting at least seven hours and drinking eight glasses of water before we consider any medication."], q: "What does the doctor recommend as an initial step?", choices: ["Prescribe medication immediately", "Refer the patient to a specialist", "Improve sleep and increase water intake", "Perform a brain scan"], correct: 2, ex: '"getting at least seven hours of sleep and drinking eight glasses of water before we consider any medication" — まず生活習慣の改善を勧めています。' },
+
+
+const listeningData = [
+  { title: "会話1 — 大学にて", script: ["W: Professor, I have been struggling with the essay assignment.", "M: Have you done all the required readings? Your argument should come from those sources.", "W: I have read most of them, but I am not sure how to connect them.", "M: Try identifying the common themes first. Then build your argument around those."], q: "What does the professor suggest the student do first?", choices: ["Submit a draft before class","Read more sources online","Find common themes in the readings","Visit the library immediately"], correct: 2, ex: "Try identifying the common themes first が根拠です。" },
+  { title: "会話2 — 電話にて", script: ["M: I would like to book a table for four this Saturday evening.", "W: I am sorry, we are fully booked on Saturday. We have availability on Friday or Sunday lunch.", "M: Friday does not work. What time is Sunday lunch available?", "W: We have slots at 12:00 and 1:30."], q: "Why can the man not book a table on Saturday?", choices: ["The restaurant is closed","He is unavailable","No tables are left on Saturday","Only online bookings accepted"], correct: 2, ex: "fully booked on Saturday が根拠。満席のため予約できません。" },
+  { title: "会話3 — 会社にて", script: ["W: Did you see the announcement about the new environmental policy?", "M: Yes. The company is going to stop using plastic cups and bottles in all offices by next month.", "W: I heard they are also planning to install solar panels on the roof.", "M: Really? It sounds like they are taking sustainability seriously."], q: "What change will the company make by next month?", choices: ["Install solar panels","Reduce employees","Replace plastic cups and bottles","Switch to remote work"], correct: 2, ex: "stop using plastic cups and bottles in all offices by next month が根拠です。" },
+  { title: "会話4 — 駅にて", script: ["M: Excuse me, I think I left my backpack on the train.", "W: You will need to go to the Lost and Found office on the second floor.", "M: Is there a chance it has already been sent there?", "W: If a staff member found it, yes. The train departs again in about 20 minutes, so please hurry."], q: "What does the woman advise the man to do?", choices: ["Wait at the platform","Call the train company","Go to the Lost and Found office on the second floor","Ask other passengers"], correct: 2, ex: "You will need to go to the Lost and Found office on the second floor が根拠です。" },
+  { title: "会話5 — 病院にて", script: ["W: Doctor, I have been having headaches every morning for two weeks.", "M: Are you sleeping well? How much water are you drinking each day?", "W: I get about five hours of sleep and maybe one or two glasses of water.", "M: I would like you to try getting at least seven hours and drinking eight glasses of water before we consider any medication."], q: "What does the doctor recommend as an initial step?", choices: ["Prescribe medication immediately","Refer to a specialist","Improve sleep and increase water intake","Perform a brain scan"], correct: 2, ex: "投薬より先に、睡眠7時間・水8杯を試すよう勧めています。" },
+  { title: "会話6 — 空港にて", script: ["W: Excuse me, I think I missed my connecting flight to London.", "M: Let me check your ticket. Your original flight was delayed, so you have been automatically rebooked on the next available flight.", "W: Oh, that is a relief. What time does that depart?", "M: It leaves at 6:45 PM from Gate 22. Please head there by 6:15."], q: "Why was the woman automatically rebooked?", choices: ["She arrived too late","Her flight was cancelled","Her original flight was delayed","She bought the wrong ticket"], correct: 2, ex: "Your original flight was delayed, so you have been automatically rebooked が根拠です。" },
+  { title: "会話7 — 図書館にて", script: ["M: Hi, I would like to renew these books. My library card number is 4872.", "W: I am sorry, but one of these books has been reserved by another member.", "M: Oh, which one is it?", "W: It is the one on environmental science. You can keep the other two for another three weeks."], q: "What is the problem with one of the books?", choices: ["It is damaged","The man renewed it twice already","Another member has reserved it","The library has no record of it"], correct: 2, ex: "one of these books has been reserved by another member が根拠です。" },
+  { title: "会話8 — 職場にて", script: ["W: Have you finished the monthly sales report yet?", "M: Almost. I just need to add the figures from the eastern region. Can you send them to me?", "W: Sure. Should I email them or put them in the shared folder?", "M: The shared folder would be easier. I can access it directly from my spreadsheet."], q: "How does the man want to receive the figures?", choices: ["By email","Printed on paper","In the shared folder","Through a messaging app"], correct: 2, ex: "The shared folder would be easier が根拠です。" },
+  { title: "会話9 — 店にて", script: ["M: I bought this jacket here last week, but the zipper broke after just one use.", "W: I am very sorry about that. Do you have your receipt?", "M: Yes, here it is.", "W: Thank you. We can either replace the jacket or give you a full refund. Which would you prefer?"], q: "What does the store offer the man?", choices: ["A discount on next purchase","A repair service","A replacement or a full refund","Store credit only"], correct: 2, ex: "We can either replace the jacket or give you a full refund が根拠です。" },
+  { title: "会話10 — 学校にて", script: ["W: Mr. Brown, I was absent last Tuesday. Did I miss anything important?", "M: Yes, we had a quiz on chapters five and six. You will need to take a makeup quiz.", "W: When can I do that?", "M: Come to my office during lunch on Thursday. Bring your textbook just in case."], q: "What does the teacher tell the student to do?", choices: ["Retake the quiz in class","Submit a written excuse","Come to his office on Thursday for a makeup quiz","Study chapters five and six alone"], correct: 2, ex: "Come to my office during lunch on Thursday が根拠です。" },
+  { title: "会話11 — カフェにて", script: ["M: Hi, I would like a large latte and a blueberry muffin please.", "W: I am sorry, we are out of blueberry muffins. We have chocolate chip and banana ones left.", "M: I will go with the chocolate chip then.", "W: Great. Would you like your latte hot or iced?"], q: "Why does the man change his order?", choices: ["He changed his mind about muffins","The latte was not available","The blueberry muffin was sold out","The chocolate chip muffin was cheaper"], correct: 2, ex: "we are out of blueberry muffins が根拠。在庫切れのため変更しています。" },
+  { title: "会話12 — ホテルにて", script: ["W: Good evening. I have a reservation under the name of Johnson.", "M: Let me check. Yes, a double room for three nights. However, I see there is a note here that your room is not ready yet due to late checkout by the previous guest.", "W: Oh, I see. How long will it take?", "M: It should be ready within 30 minutes. In the meantime, feel free to use our lounge."], q: "Why is the woman's room not ready?", choices: ["The hotel overbooked rooms","The cleaning staff is on break","The previous guest checked out late","The woman arrived too early"], correct: 2, ex: "late checkout by the previous guest が根拠です。" },
+  { title: "会話13 — 市役所にて", script: ["M: I would like to apply for a parking permit for my new car.", "W: Sure. You will need to bring proof of address and your vehicle registration.", "M: I have my registration here, but I do not have proof of address with me today.", "W: In that case, you can submit the remaining documents online within the next 14 days."], q: "What must the man do to complete his application?", choices: ["Visit the office again next week","Submit proof of address online within 14 days","Pay a fee at the counter","Get a new vehicle registration"], correct: 1, ex: "you can submit the remaining documents online within the next 14 days が根拠です。" },
+  { title: "会話14 — 旅行代理店にて", script: ["W: I am interested in a package tour to New Zealand in March.", "M: We have two options. One includes flights and hotel only, and the other adds guided tours and meals.", "W: What is the price difference?", "M: The full package is about 40 percent more expensive, but most customers find it worth it."], q: "What is included in the more expensive package?", choices: ["Only flights and hotel","Flights, hotel, guided tours, and meals","Hotel and meals only","Guided tours only"], correct: 1, ex: "the other adds guided tours and meals が根拠です。" },
+  { title: "会話15 — 自動車修理店にて", script: ["M: My car has been making a strange noise when I brake.", "W: I see. We will need to take a look at the brake pads and the rotors. Can you leave it with us today?", "M: Yes, that is fine. How long will it take?", "W: We should have it ready by 5 PM. We will call you if we find any additional problems."], q: "What will the mechanic check first?", choices: ["The engine and oil level","The tires and wheels","The brake pads and rotors","The battery and electrical system"], correct: 2, ex: "We will need to take a look at the brake pads and the rotors が根拠です。" },
+  { title: "会話16 — 公園にて", script: ["W: Excuse me, do you know if this park has a playground for young children?", "M: Yes, there is one near the pond at the north end of the park. It is about a ten-minute walk from here.", "W: Is there a restroom nearby?", "M: Yes, there are restrooms right next to the playground."], q: "Where is the playground located?", choices: ["Near the entrance of the park","Next to the parking lot","Near the pond at the north end","At the center of the park"], correct: 2, ex: "near the pond at the north end of the park が根拠です。" },
+  { title: "会話17 — 電話（仕事）にて", script: ["M: Hello, this is Mark from TechSolutions. May I speak to Ms. Park?", "W: I am sorry, she is in a meeting right now. Would you like to leave a message?", "M: Yes, please tell her that the software update has been completed and is ready for testing.", "W: Of course. I will let her know as soon as her meeting is over."], q: "What message does Mark leave for Ms. Park?", choices: ["He wants to schedule a new meeting","The software update is ready for testing","There is a problem with the installation","He needs her to call him back urgently"], correct: 1, ex: "the software update has been completed and is ready for testing が根拠です。" },
+  { title: "会話18 — 学校の廊下にて", script: ["W: Hey, did you sign up for the school trip to Kyoto?", "M: Not yet. I was going to, but I heard the deadline was extended to next Friday.", "W: Actually, the teacher announced this morning that it has been moved back to tomorrow.", "M: Oh no, I had better go sign up right away then."], q: "When is the actual deadline for signing up for the trip?", choices: ["Next Friday","This afternoon","Tomorrow","Next Monday"], correct: 2, ex: "it has been moved back to tomorrow が根拠です。締め切りは明日に変更されました。" },
+  { title: "会話19 — スーパーマーケットにて", script: ["M: Excuse me, I am looking for the organic honey. I cannot seem to find it.", "W: It used to be in aisle seven, but we moved it to aisle three last week, next to the jam.", "M: Oh, I see. Thank you. Do you know if it is on sale this week?", "W: Yes, all organic products are 15 percent off until Sunday."], q: "Where can the man find the organic honey now?", choices: ["Aisle seven","Aisle five","Aisle three","Near the entrance"], correct: 2, ex: "we moved it to aisle three last week が根拠です。" },
+  { title: "会話20 — 図書館（勉強中）にて", script: ["W: Excuse me, I have been waiting for this study room for over an hour. I reserved it online.", "M: I apologize for the inconvenience. Let me check the system. It seems the previous user extended their booking without notifying us.", "W: Is there another room I can use?", "M: Room 4 is available now. I will move your reservation there immediately."], q: "Why was the woman unable to use the study room she reserved?", choices: ["She made the wrong booking","The room was being cleaned","The previous user extended their booking","The computer system had an error"], correct: 2, ex: "the previous user extended their booking without notifying us が根拠です。" },
+  { title: "会話21 — 薬局にて", script: ["M: Hi, I have a prescription here from my doctor.", "W: Let me take a look. This will take about 15 minutes to prepare. Would you like to wait or come back later?", "M: I will wait. Is there anything I should know about taking this medication?", "W: Yes, take it twice a day after meals, and avoid alcohol while you are on it."], q: "What is the woman's advice about the medication?", choices: ["Take it once a day on an empty stomach","Avoid exercise while taking it","Take it twice a day after meals and avoid alcohol","Take it with plenty of water at night"], correct: 2, ex: "take it twice a day after meals, and avoid alcohol が根拠です。" },
+  { title: "会話22 — 大学の事務局にて", script: ["W: I would like to change my major from economics to computer science.", "W: Is that possible at this stage?", "M: Yes, but the deadline for major changes is at the end of this month.", "M: You will also need to get approval from both department heads before submitting the form."], q: "What must the student do before submitting the form?", choices: ["Pay a transfer fee","Complete a test in the new subject","Get approval from both department heads","Wait until the next academic year"], correct: 2, ex: "get approval from both department heads before submitting the form が根拠です。" },
+  { title: "会話23 — レストランにて", script: ["M: Excuse me, I ordered the grilled salmon about 30 minutes ago, and it still has not arrived.", "W: I am so sorry about that. Let me check with the kitchen. It appears there was a mix-up with your order.", "M: That is quite a long wait. Can you tell me how much longer it will be?", "W: It will be ready in about five minutes. And I would like to offer you a complimentary dessert for the inconvenience."], q: "What does the waitress offer the man for the inconvenience?", choices: ["A discount on his bill","A free drink","A complimentary dessert","A replacement dish"], correct: 2, ex: "I would like to offer you a complimentary dessert for the inconvenience が根拠です。" },
+  { title: "会話24 — 銀行にて", script: ["W: I would like to open a savings account please.", "M: Certainly. We have two types: a standard account with no monthly fee, and a premium account that earns higher interest.", "W: What is the minimum deposit for the premium account?", "M: You need to deposit at least 500 dollars to open a premium account."], q: "What is the difference between the two account types?", choices: ["One is for businesses and the other for individuals","One has no fee and the other earns higher interest","One requires ID and the other does not","One allows online access and the other does not"], correct: 1, ex: "a standard account with no monthly fee と a premium account that earns higher interest の対比が根拠です。" },
+  { title: "会話25 — 郵便局にて", script: ["M: I need to send this package to Australia. What are my options?", "W: We have standard international shipping, which takes 10 to 14 business days, or express shipping, which takes 3 to 5 days.", "M: How much more expensive is the express option?", "W: It is roughly twice the price, but it also comes with tracking and insurance."], q: "What is one advantage of the express shipping option?", choices: ["It is cheaper than standard shipping","It includes tracking and insurance","It arrives the next day","It is available on weekends only"], correct: 1, ex: "it also comes with tracking and insurance が根拠です。" },
+  { title: "会話26 — 会社の廊下にて", script: ["W: Have you heard about the company retreat next month?", "M: Yes, I signed up. I heard it will be held at a resort by the lake.", "W: I am thinking of going, but I am not sure I can get the time off.", "M: You should ask your manager soon. I heard spots are filling up quickly."], q: "What does the man suggest the woman do?", choices: ["Cancel her current plans","Sign up for the retreat online","Ask her manager for time off soon","Wait until next year"], correct: 2, ex: "You should ask your manager soon が根拠です。" },
+  { title: "会話27 — 体育館にて", script: ["M: Excuse me, I signed up for the beginner yoga class at 7 PM tonight, but I cannot find the room.", "W: That class has been moved to the large studio on the third floor. The original room is being used for a private event.", "M: I see. Is there an elevator nearby?", "W: Yes, just around the corner to your left."], q: "Why was the yoga class moved?", choices: ["The instructor changed the schedule","The room was too small","The original room is being used for a private event","The class was cancelled and rescheduled"], correct: 2, ex: "The original room is being used for a private event が根拠です。" },
+  { title: "会話28 — 市民センターにて", script: ["W: I am interested in the cooking classes you offer. Do I need any experience?", "M: Not at all. Our beginner course starts from the basics. It runs every Saturday for six weeks.", "W: How much does it cost?", "M: It is 120 dollars for the full course, which includes all ingredients and materials."], q: "What is included in the course fee?", choices: ["A cooking textbook","A certificate of completion","All ingredients and materials","A kitchen apron"], correct: 2, ex: "which includes all ingredients and materials が根拠です。" },
+  { title: "会話29 — 電車の中にて", script: ["M: Excuse me, is this seat taken?", "W: No, go ahead. Are you heading to the city center?", "M: Yes, I have a job interview at 2 o'clock.", "W: Oh, good luck! This train goes express and should arrive about 20 minutes ahead of schedule today."], q: "What does the woman tell the man about the train?", choices: ["It will be delayed by 20 minutes","It stops at every station","It will arrive about 20 minutes early","It does not go to the city center"], correct: 2, ex: "should arrive about 20 minutes ahead of schedule today が根拠です。" },
+  { title: "会話30 — 観光案内所にて", script: ["W: Hello. We are visiting for the first time and would like to see some historical sites.", "M: Wonderful! The old castle is a must-see. You can take bus number 12 from right outside.", "W: How long does it take to get there?", "M: About 25 minutes by bus. The last bus back leaves at 6:30 PM, so keep that in mind."], q: "What does the man warn the woman about?", choices: ["The castle is closed on weekends","The bus only runs in the morning","The last bus back leaves at 6:30 PM","The entrance fee is very expensive"], correct: 2, ex: "The last bus back leaves at 6:30 PM, so keep that in mind が根拠です。" },
 ];
 
-const readingPassage = `<p>In recent decades, the concept of remote work — performing job duties from a location outside the traditional office — has gained considerable attention. While the idea existed long before the twenty-first century, it was the rapid advancement of communication technology and, more dramatically, the global outbreak of COVID-19 in 2020 that transformed remote work from a privilege enjoyed by a small number of professionals into a widespread practice affecting millions of workers worldwide.</p><p>Proponents of remote work point to several significant advantages. Studies have shown that many employees report higher levels of job satisfaction and productivity when working from home, partly because they can avoid long commutes, set their own schedules, and work in environments tailored to their personal preferences. Employers, too, have benefited in some cases, with reduced overhead costs resulting from smaller office spaces and the ability to hire talent from a broader geographic area.</p><p>However, remote work is not without its drawbacks. A recurring concern is the blurring of boundaries between professional and personal life. Without the physical separation of an office, some workers find it difficult to "switch off," leading to longer working hours and increased stress. Social isolation is another issue; the casual conversations and spontaneous collaboration that occur naturally in an office environment are difficult to replicate online.</p><p>Organizations have responded to these challenges in various ways. Many companies have adopted a "hybrid" model, in which employees divide their time between working remotely and attending the office. This approach attempts to balance the flexibility valued by workers with the collaborative benefits of in-person interaction.</p>`;
+const readingPassage = "<p>In recent decades, the concept of remote work has gained considerable attention. While the idea existed long before the twenty-first century, it was the rapid advancement of communication technology and, more dramatically, the global outbreak of COVID-19 in 2020 that transformed remote work from a privilege enjoyed by a small number of professionals into a widespread practice affecting millions of workers worldwide.</p><p>Proponents of remote work point to several significant advantages. Studies have shown that many employees report higher levels of job satisfaction and productivity when working from home, partly because they can avoid long commutes, set their own schedules, and work in environments tailored to their personal preferences. Employers, too, have benefited in some cases, with reduced overhead costs resulting from smaller office spaces and the ability to hire talent from a broader geographic area.</p><p>However, remote work is not without its drawbacks. A recurring concern is the blurring of boundaries between professional and personal life. Without the physical separation of an office, some workers find it difficult to switch off, leading to longer working hours and increased stress. Social isolation is another issue; the casual conversations and spontaneous collaboration that occur naturally in an office environment are difficult to replicate online.</p><p>Organizations have responded to these challenges in various ways. Many companies have adopted a hybrid model, in which employees divide their time between working remotely and attending the office. This approach attempts to balance the flexibility valued by workers with the collaborative benefits of in-person interaction.</p>";
 
-const readingQuestions = [
-  { q: "What event most dramatically accelerated the adoption of remote work?", choices: ["Invention of high-speed internet", "Introduction of smartphones", "The global outbreak of COVID-19 in 2020", "A worldwide shortage of office space"], correct: 2, ex: "第1段落 "the global outbreak of COVID-19 in 2020 that transformed remote work" が根拠です。" },
-  { q: "Which is mentioned as a benefit of remote work for employers?", choices: ["Easier to monitor employees", "Reduce costs and hire from a wider area", "Workers take fewer sick days", "More frequent meetings possible"], correct: 1, ex: "第2段落 "reduced overhead costs" と "hire talent from a broader geographic area" が挙げられています。" },
-  { q: "What problem is described in the third paragraph?", choices: ["Workers lack technology", "Employees prefer offices", "Boundary between work and personal life becomes unclear", "Remote workers earn lower salaries"], correct: 2, ex: "第3段落 "the blurring of boundaries between professional and personal life" が直接の根拠です。" },
-  { q: "What is the 'hybrid' model?", choices: ["Working entirely from home", "Splitting time between home and office", "Hiring both full-time and part-time workers", "A technology connecting remote workers"], correct: 1, ex: "第4段落 "employees divide their time between working remotely and attending the office" とあります。" },
+const readingPassages = [
+  {
+    title: "長文1 — リモートワーク",
+    passage: "<p>In recent decades, the concept of remote work has gained considerable attention. While the idea existed long before the twenty-first century, it was the rapid advancement of communication technology and, more dramatically, the global outbreak of COVID-19 in 2020 that transformed remote work from a privilege enjoyed by a small number of professionals into a widespread practice affecting millions of workers worldwide.</p><p>Proponents of remote work point to several significant advantages. Studies have shown that many employees report higher levels of job satisfaction and productivity when working from home, partly because they can avoid long commutes, set their own schedules, and work in environments tailored to their personal preferences. Employers, too, have benefited in some cases, with reduced overhead costs resulting from smaller office spaces and the ability to hire talent from a broader geographic area.</p><p>However, remote work is not without its drawbacks. A recurring concern is the blurring of boundaries between professional and personal life. Without the physical separation of an office, some workers find it difficult to switch off, leading to longer working hours and increased stress. Social isolation is another issue; the casual conversations and spontaneous collaboration that occur naturally in an office environment are difficult to replicate online.</p><p>Organizations have responded to these challenges in various ways. Many companies have adopted a hybrid model, in which employees divide their time between working remotely and attending the office. This approach attempts to balance the flexibility valued by workers with the collaborative benefits of in-person interaction.</p>",
+    questions: [
+      { q: "What event most dramatically accelerated the adoption of remote work?", choices: ["Invention of high-speed internet","Introduction of smartphones","The global outbreak of COVID-19 in 2020","A worldwide shortage of office space"], correct: 2, ex: "第1段落 the global outbreak of COVID-19 in 2020 that transformed remote work が根拠です。" },
+      { q: "Which is mentioned as a benefit of remote work for employers?", choices: ["Easier to monitor employees","Reduce costs and hire from a wider area","Workers take fewer sick days","More frequent meetings possible"], correct: 1, ex: "第2段落 reduced overhead costs と hire talent from a broader geographic area が根拠です。" },
+      { q: "What problem is described in the third paragraph?", choices: ["Workers lack technology","Employees prefer offices","Boundary between work and personal life becomes unclear","Remote workers earn lower salaries"], correct: 2, ex: "第3段落 the blurring of boundaries between professional and personal life が根拠です。" },
+      { q: "What is the hybrid model?", choices: ["Working entirely from home","Splitting time between home and office","Hiring both full-time and part-time workers","A technology connecting remote workers"], correct: 1, ex: "第4段落 employees divide their time between working remotely and attending the office が根拠です。" },
+      { q: "According to paragraph 2, what do many employees report about working from home?", choices: ["They feel more isolated","They spend more time commuting","They have higher job satisfaction and productivity","They receive lower pay"], correct: 2, ex: "第2段落 many employees report higher levels of job satisfaction and productivity が根拠です。" },
+      { q: "What does proponents in paragraph 2 most likely mean?", choices: ["People who oppose something","People who support something","People who study something","People who regulate something"], correct: 1, ex: "proponents は支持者・賛成者という意味です。" },
+      { q: "Which is NOT mentioned as a drawback of remote work?", choices: ["Difficulty switching off from work","Social isolation","Reduced salary for remote employees","Blurring of work and personal life"], correct: 2, ex: "給与の減少については本文に述べられていません。" },
+      { q: "What is the main purpose of this passage?", choices: ["To argue remote work is always better","To explain the history of the internet","To discuss both benefits and drawbacks of remote work","To encourage companies to ban remote work"], correct: 2, ex: "本文はメリットとデメリットの両面を紹介しています。" },
+    ]
+  },
+  {
+    title: "長文2 — プラスチック汚染",
+    passage: "<p>The problem of plastic pollution in the world's oceans has become one of the most pressing environmental issues of the twenty-first century. Every year, an estimated eight million metric tons of plastic waste enter the ocean, threatening marine ecosystems and the species that depend on them. Sea turtles mistake plastic bags for jellyfish, seabirds feed plastic fragments to their chicks, and fish ingest microscopic plastic particles known as microplastics. Scientists warn that if current trends continue, there could be more plastic than fish in the ocean by 2050.</p><p>One major source of this pollution is single-use plastics, items designed to be used once and thrown away, such as straws, bottles, and packaging materials. These products are manufactured from petroleum-based materials that take hundreds of years to decompose. Instead of breaking down completely, they fragment into smaller and smaller pieces, eventually becoming microplastics that are nearly impossible to remove from the environment.</p><p>In response to this crisis, governments around the world have begun to take action. The European Union banned many single-use plastic products in 2021, and several countries in Africa and Asia have introduced strict regulations on plastic bags. However, critics argue that these measures are not enough, pointing out that industrial and agricultural plastic waste remains largely unregulated.</p><p>On the individual level, consumer choices can also make a meaningful difference. Switching to reusable bags, bottles, and containers reduces the demand for single-use plastics. Participating in local beach or river clean-up events helps remove existing waste before it reaches the ocean.</p>",
+    questions: [
+      { q: "According to the passage, what will happen to the ocean by 2050 if current trends continue?", choices: ["Fish populations will double","There will be more plastic than fish","All plastic will decompose","Ocean temperatures will drop"], correct: 1, ex: "第1段落 there could be more plastic than fish in the ocean by 2050 が根拠です。" },
+      { q: "Why are single-use plastics particularly harmful to the environment?", choices: ["They are too expensive to recycle","They are made from animal-based materials","They take hundreds of years to decompose and become microplastics","They are only produced in developed countries"], correct: 2, ex: "第2段落 take hundreds of years to decompose と fragment into microplastics が根拠です。" },
+      { q: "What criticism is raised about government actions on plastic pollution?", choices: ["Governments focused too much on industrial waste","The bans on single-use plastics were reversed","Industrial and agricultural plastic waste remains largely unregulated","Individual consumers are not taxed enough"], correct: 2, ex: "第3段落 industrial and agricultural plastic waste remains largely unregulated が根拠です。" },
+      { q: "What can individuals do to help reduce plastic pollution?", choices: ["Avoid buying foreign products","Use reusable items and join clean-up events","Only buy government-approved goods","Stop using the internet"], correct: 1, ex: "第4段落 Switching to reusable bags と Participating in local clean-up events が根拠です。" },
+      { q: "What are microplastics?", choices: ["Large pieces of plastic found on beaches","Plastic items smaller than a straw","Tiny plastic particles that are nearly impossible to remove","Plastic used in medical equipment"], correct: 2, ex: "第1段落 microscopic plastic particles known as microplastics が根拠です。" },
+      { q: "Which is mentioned as banning single-use plastics in 2021?", choices: ["The United States","Japan","The European Union","Australia"], correct: 2, ex: "第3段落 The European Union banned many single-use plastic products in 2021 が根拠です。" },
+      { q: "What does ingest in the first paragraph most likely mean?", choices: ["To avoid eating","To produce","To swallow or consume","To destroy"], correct: 2, ex: "ingest は飲み込む・摂取するという意味です。" },
+      { q: "What is the overall message of the final paragraph?", choices: ["Governments must solve plastic pollution alone","Individuals have no power to change outcomes","Individual choices can make a meaningful difference","Clean-up events are ineffective"], correct: 2, ex: "第4段落 consumer choices can also make a meaningful difference が根拠です。" },
+    ]
+  },
+  {
+    title: "長文3 — 人工知能と社会",
+    passage: "<p>Artificial intelligence, commonly referred to as AI, is rapidly transforming nearly every aspect of modern society. From healthcare and education to transportation and entertainment, AI-powered systems are being integrated into daily life at an unprecedented pace. While many experts celebrate the potential of AI to solve complex problems and improve human well-being, others warn of significant risks that must be carefully managed.</p><p>One of the most frequently cited benefits of AI is its ability to process large amounts of data far more quickly and accurately than humans. In medicine, AI algorithms have been developed that can detect certain types of cancer in medical images with a level of accuracy that rivals trained doctors. In the field of climate science, AI tools help researchers analyze satellite data to better understand environmental changes.</p><p>Despite these promising developments, concerns about AI are growing. One major issue is the potential for job displacement. As AI systems become more capable, they are increasingly able to perform tasks previously done by humans, raising fears of widespread unemployment in sectors such as manufacturing, customer service, and data entry. Critics argue that governments and businesses must invest heavily in retraining programs to help workers adapt.</p><p>Another significant concern is the issue of bias and fairness. AI systems learn from data, and if that data reflects existing social inequalities, the resulting algorithms may make unfair decisions. For example, AI used in hiring processes has been found to discriminate against certain groups. Researchers and policymakers are calling for greater transparency in how AI systems are designed and regulated.</p>",
+    questions: [
+      { q: "What is one benefit of AI mentioned in the second paragraph?", choices: ["It can replace all human workers","It can detect certain cancers with high accuracy","It makes all medical treatments cheaper","It eliminates the need for climate research"], correct: 1, ex: "第2段落 AI algorithms can detect certain types of cancer が根拠です。" },
+      { q: "What is a major concern about AI mentioned in the third paragraph?", choices: ["AI is too expensive to develop","AI may cause widespread unemployment","AI cannot process large amounts of data","AI is only useful in entertainment"], correct: 1, ex: "第3段落 raising fears of widespread unemployment が根拠です。" },
+      { q: "What does displacement in paragraph 3 most likely mean?", choices: ["An improvement in job conditions","The replacement of workers by machines","A new type of job created by AI","A training program for workers"], correct: 1, ex: "job displacement は機械による仕事の置き換えを意味します。" },
+      { q: "Why might AI systems make unfair decisions according to paragraph 4?", choices: ["AI systems are programmed to discriminate","AI cannot understand human language","AI learns from data that may reflect social inequalities","AI is designed only for certain groups"], correct: 2, ex: "第4段落 if that data reflects existing social inequalities が根拠です。" },
+      { q: "What solution is suggested for dealing with job displacement caused by AI?", choices: ["Banning AI in the workplace","Reducing AI systems developed","Investing in retraining programs for workers","Increasing taxes on technology companies"], correct: 2, ex: "第3段落 invest heavily in retraining programs が根拠です。" },
+      { q: "What example of AI bias is given in the fourth paragraph?", choices: ["AI used in medical diagnosis","AI used in hiring processes","AI used in transportation","AI used in climate science"], correct: 1, ex: "第4段落 AI used in hiring processes has been found to discriminate が根拠です。" },
+      { q: "What is the main idea of the passage?", choices: ["AI is completely safe and beneficial","AI has both great potential and serious risks","AI should be banned from society","AI is only useful in science and medicine"], correct: 1, ex: "本文全体でAIのメリットとリスクの両方が議論されています。" },
+      { q: "What are policymakers calling for to address AI bias?", choices: ["Slowing down AI development","Greater transparency in how AI is designed and regulated","Removing AI from hiring processes entirely","Training more AI engineers"], correct: 1, ex: "第4段落 calling for greater transparency in how AI systems are designed and regulated が根拠です。" },
+    ]
+  },
 ];
+
+const readingQs = [
+  { q: "What event most dramatically accelerated the adoption of remote work?", choices: ["Invention of high-speed internet","Introduction of smartphones","The global outbreak of COVID-19 in 2020","A worldwide shortage of office space"], correct: 2, ex: "第1段落 the global outbreak of COVID-19 in 2020 that transformed remote work が根拠です。" },
+  { q: "Which is mentioned as a benefit of remote work for employers?", choices: ["Easier to monitor employees","Reduce costs and hire from a wider area","Workers take fewer sick days","More frequent meetings possible"], correct: 1, ex: "第2段落 reduced overhead costs と hire talent from a broader geographic area が挙げられています。" },
+  { q: "What problem is described in the third paragraph?", choices: ["Workers lack technology","Employees prefer offices","Boundary between work and personal life becomes unclear","Remote workers earn lower salaries"], correct: 2, ex: "第3段落 the blurring of boundaries between professional and personal life が直接の根拠です。" },
+  { q: "What is the hybrid model?", choices: ["Working entirely from home","Splitting time between home and office","Hiring both full-time and part-time workers","A technology connecting remote workers"], correct: 1, ex: "第4段落 employees divide their time between working remotely and attending the office とあります。" },
+  { q: "According to paragraph 2, what do many employees report about working from home?", choices: ["They feel more isolated than before","They spend more time commuting","They have higher job satisfaction and productivity","They receive lower pay than office workers"], correct: 2, ex: "第2段落 many employees report higher levels of job satisfaction and productivity when working from home が根拠です。" },
+  { q: "What does the word 'proponents' in paragraph 2 most likely mean?", choices: ["People who are against something","People who support something","People who are indifferent to something","People who study something"], correct: 1, ex: "proponents は 支持者・賛成者 という意味です。文脈から、リモートワークのメリットを述べる人々を指しています。" },
+  { q: "Which of the following is NOT mentioned as a drawback of remote work?", choices: ["Difficulty switching off from work","Social isolation from colleagues","Reduced salary for remote employees","Blurring of work and personal life"], correct: 2, ex: "第3段落には blurring of boundaries と social isolation は述べられていますが、給与の減少については述べられていません。" },
+  { q: "What is the main purpose of this passage?", choices: ["To argue that remote work is always better than office work","To explain the history of the internet","To discuss both the benefits and drawbacks of remote work","To encourage companies to ban remote work"], correct: 2, ex: "本文は第2段落でメリット、第3・4段落でデメリットと対応策を述べており、両面を紹介しています。" },
+]
 
 // ── LESSON STATE ──
 let currentLesson = null;
 let currentQ = 0;
-let lessonQuestions = [];
+let lessonQs = [];
 let lessonCorrect = 0;
 let selectedChoice = null;
 let answered = false;
 let readingAnswered = [];
+let currentReadingPassage = 0;
+let speechSynth = window.speechSynthesis;
+
+// ── SOUND EFFECTS ──
+function playSound(type) {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    if (type === 'correct') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523, ctx.currentTime);
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(784, ctx.currentTime + 0.2);
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.5);
+    } else {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(300, ctx.currentTime);
+      osc.frequency.setValueAtTime(180, ctx.currentTime + 0.25);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    }
+  } catch(e) {}
+}
+let isSpeaking = false;
+
+// ── SPEECH ──
+var playCount = {};
+
+function speakCurrent(btnId) {
+  var q = listeningData[currentQ];
+  if (q) speakScript(q.script, btnId);
+}
+
+function speakScript(lines, btnId) {
+  if (!speechSynth) {
+    alert("お使いのブラウザは音声再生に対応していません。スクリプトを読んで練習してください。");
+    return;
+  }
+  speechSynth.cancel();
+  if (isSpeaking) {
+    isSpeaking = false;
+    updatePlayBtn(btnId, false);
+    return;
+  }
+  isSpeaking = true;
+  updatePlayBtn(btnId, true);
+
+  // 各セリフを1つずつ話す（話者交互に速度を少し変える）
+  var idx = 0;
+  function speakNext() {
+    if (idx >= lines.length) {
+      isSpeaking = false;
+      updatePlayBtn(btnId, false);
+      updatePlayCount(btnId);
+      return;
+    }
+    var utter = new SpeechSynthesisUtterance(lines[idx]);
+    utter.lang = 'en-US';
+    utter.rate = 0.85;
+    utter.pitch = idx % 2 === 0 ? 1.1 : 0.9;
+    utter.onend = function() { idx++; speakNext(); };
+    utter.onerror = function() { isSpeaking = false; updatePlayBtn(btnId, false); };
+    speechSynth.speak(utter);
+  }
+  speakNext();
+}
+
+function updatePlayBtn(btnId, playing) {
+  var btn = document.getElementById(btnId);
+  var wave = document.getElementById('audio-wave-' + btnId);
+  if (btn) btn.textContent = playing ? '⏸' : '▶';
+  if (wave) wave.style.display = playing ? 'flex' : 'none';
+}
+
+function updatePlayCount(btnId) {
+  playCount[btnId] = (playCount[btnId] || 0) + 1;
+  var el = document.getElementById('play-count-' + btnId);
+  if (el) el.textContent = playCount[btnId] + '回再生';
+}
 
 // ── HOME ──
 function renderHome() {
   const xpGoal = 50;
   const xpPct = Math.min((state.xp % xpGoal) / xpGoal * 100, 100);
-  document.getElementById('screen-home').innerHTML = `
-    <div class="home-header">
-      <div class="streak-badge"><i class="ti ti-flame" style="font-size:22px"></i> ${state.streak}</div>
-      <div class="xp-badge"><i class="ti ti-bolt" style="font-size:22px"></i> ${state.xp}</div>
-      <div class="gems-badge"><i class="ti ti-diamond" style="font-size:22px"></i> ${state.gems}</div>
-    </div>
-    <div class="mascot-banner">
-      <div class="mascot">🦉</div>
-      <div class="mascot-text">
-        <h2>英検2級を攻略しよう！</h2>
-        <p>今日のレッスンを始めよう 🎯</p>
-      </div>
-    </div>
-    <div class="daily-goal-card">
-      <div class="daily-goal-title">📅 今日の目標 — ${state.xp % xpGoal} / ${xpGoal} XP</div>
-      <div class="xp-bar-wrap"><div class="xp-bar-fill" style="width:${xpPct}%"></div></div>
-      <div class="xp-bar-label">${Math.round(xpPct)}%</div>
-    </div>
-    <div class="section-label">レッスン</div>
-    <div class="unit-path">
-      <div class="path-node">
-        <button class="node-btn vocab" onclick="startLesson('vocab')">📖</button>
-        <div class="node-label">単語・語彙</div>
-        <div class="node-stars">${renderStars(state.unitsProgress.vocab)}</div>
-      </div>
-      <div class="node-connector"></div>
-      <div class="path-node">
-        <button class="node-btn listen" onclick="startLesson('listen')">🎧</button>
-        <div class="node-label">リスニング</div>
-        <div class="node-stars">${renderStars(state.unitsProgress.listen)}</div>
-      </div>
-      <div class="node-connector"></div>
-      <div class="path-node">
-        <button class="node-btn read" onclick="startLesson('read')">📰</button>
-        <div class="node-label">長文読解</div>
-        <div class="node-stars">${renderStars(state.unitsProgress.read)}</div>
-      </div>
-    </div>
-  `;
+  document.getElementById('screen-home').innerHTML =
+    '<div class="home-header">' +
+      '<div class="streak-badge">🔥 ' + state.streak + '</div>' +
+      '<div class="xp-badge">⚡ ' + state.xp + '</div>' +
+      '<div class="gems-badge">💎 ' + state.gems + '</div>' +
+    '</div>' +
+    '<div class="mascot-banner">' +
+      '<div class="mascot">' + state.profileAvatar + '</div>' +
+      '<div class="mascot-text"><h2>英検2級を攻略しよう！</h2><p>今日のレッスンを始めよう 🎯</p></div>' +
+    '</div>' +
+    '<div class="daily-goal-card">' +
+      '<div class="daily-goal-title">📅 今日の目標 — ' + (state.xp % xpGoal) + ' / ' + xpGoal + ' XP</div>' +
+      '<div class="xp-bar-wrap"><div class="xp-bar-fill" style="width:' + xpPct + '%"></div></div>' +
+      '<div class="xp-bar-label">' + Math.round(xpPct) + '%</div>' +
+    '</div>' +
+    '<div class="section-label">レッスン</div>' +
+    '<div class="unit-path">' +
+      '<div class="path-node">' +
+        '<button class="node-btn vocab" onclick="startLesson(\'vocab\')">📖</button>' +
+        '<div class="node-label">単語・語彙</div>' +
+        '<div class="node-stars">' + renderStars(state.unitsProgress.vocab) + '</div>' +
+      '</div>' +
+      '<div class="node-connector"></div>' +
+      '<div class="path-node">' +
+        '<button class="node-btn listen" onclick="startLesson(\'listen\')">🎧</button>' +
+        '<div class="node-label">リスニング</div>' +
+        '<div class="node-stars">' + renderStars(state.unitsProgress.listen) + '</div>' +
+      '</div>' +
+      '<div class="node-connector"></div>' +
+      '<div class="path-node">' +
+        '<button class="node-btn read" onclick="startLesson(\'read\')">📰</button>' +
+        '<div class="node-label">長文読解</div>' +
+        '<div class="node-stars">' + renderStars(state.unitsProgress.read) + '</div>' +
+      '</div>' +
+    '</div>';
 }
 
 function renderStars(n) {
-  return [0,1,2].map(i => `<span>${i < n ? '⭐' : '☆'}</span>`).join('');
+  return [0,1,2].map(function(i) { return '<span>' + (i < n ? '⭐' : '☆') + '</span>'; }).join('');
 }
 
 // ── PROFILE ──
@@ -308,42 +618,81 @@ function renderProfile() {
     { icon: '🏆', name: '全クリア', earned: state.lessonsCompleted >= 3 },
     { icon: '🚀', name: '伝説', earned: state.xp >= 500 },
   ];
-  document.getElementById('screen-profile').innerHTML = `
-    <div class="profile-header">
-      <div class="avatar">🦊</div>
-      <div class="profile-name">がんばり屋さん</div>
-      <div class="profile-sub">英検2級チャレンジ中</div>
-    </div>
-    <div class="stats-cards">
-      <div class="stats-card streak"><div class="stats-card-val">🔥 ${state.streak}</div><div class="stats-card-lbl">日連続</div></div>
-      <div class="stats-card xp"><div class="stats-card-val">⚡ ${state.xp}</div><div class="stats-card-lbl">総XP</div></div>
-      <div class="stats-card correct"><div class="stats-card-val">${acc}%</div><div class="stats-card-lbl">正解率</div></div>
-      <div class="stats-card lessons"><div class="stats-card-val">${state.lessonsCompleted}</div><div class="stats-card-lbl">完了レッスン</div></div>
-    </div>
-    <div class="achievements-section">
-      <div class="achievements-title">🏅 実績</div>
-      <div class="badge-grid">
-        ${badges.map(b => `
-          <div class="badge-item">
-            <div class="badge-icon ${b.earned ? 'earned' : 'locked'}">${b.icon}</div>
-            <div class="badge-name">${b.name}</div>
-          </div>`).join('')}
-      </div>
-    </div>
-  `;
+  document.getElementById('screen-profile').innerHTML =
+    '<div class="profile-header">' +
+      '<div class="avatar-wrap">' +
+        '<div class="avatar" onclick="openModal()">' + state.profileAvatar + '</div>' +
+        '<div class="avatar-edit" onclick="openModal()">✏️</div>' +
+      '</div>' +
+      '<div class="profile-name">' + state.profileName + '</div>' +
+      '<div class="profile-sub">英検2級チャレンジ中</div>' +
+      '<button class="edit-btn" onclick="openModal()">プロフィールを編集</button>' +
+    '</div>' +
+    '<div class="stats-cards">' +
+      '<div class="stats-card"><div class="stats-card-val" style="color:var(--orange)">🔥 ' + state.streak + '</div><div class="stats-card-lbl">日連続</div></div>' +
+      '<div class="stats-card"><div class="stats-card-val" style="color:var(--purple)">⚡ ' + state.xp + '</div><div class="stats-card-lbl">総XP</div></div>' +
+      '<div class="stats-card"><div class="stats-card-val" style="color:var(--green)">' + acc + '%</div><div class="stats-card-lbl">正解率</div></div>' +
+      '<div class="stats-card"><div class="stats-card-val" style="color:var(--blue)">' + state.lessonsCompleted + '</div><div class="stats-card-lbl">完了レッスン</div></div>' +
+    '</div>' +
+    '<div class="achievements-section">' +
+      '<div class="achievements-title">🏅 実績</div>' +
+      '<div class="badge-grid">' +
+        badges.map(function(b) {
+          return '<div class="badge-item"><div class="badge-icon ' + (b.earned ? 'earned' : 'locked') + '">' + b.icon + '</div><div class="badge-name">' + b.name + '</div></div>';
+        }).join('') +
+      '</div>' +
+    '</div>';
+}
+
+// ── MODAL ──
+function openModal() {
+  document.getElementById('edit-name').value = state.profileName;
+  state.selectedAvatar = state.profileAvatar;
+  var grid = document.getElementById('emoji-grid');
+  grid.innerHTML = AVATARS.map(function(e) {
+    return '<div class="emoji-opt ' + (e === state.selectedAvatar ? 'selected' : '') + '" onclick="selectAvatar(this, \'' + e + '\')">' + e + '</div>';
+  }).join('');
+  document.getElementById('edit-modal').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('edit-modal').classList.remove('show');
+}
+
+function selectAvatar(el, emoji) {
+  state.selectedAvatar = emoji;
+  document.querySelectorAll('.emoji-opt').forEach(function(e) { e.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+function saveProfile() {
+  var name = document.getElementById('edit-name').value.trim();
+  if (name) state.profileName = name;
+  state.profileAvatar = state.selectedAvatar;
+  saveState();
+  closeModal();
+  renderProfile();
+  renderHome();
 }
 
 // ── LESSON ──
 function startLesson(type) {
+  if (speechSynth) speechSynth.cancel();
+  isSpeaking = false;
   currentLesson = type;
   currentQ = 0;
   lessonCorrect = 0;
   selectedChoice = null;
   answered = false;
   readingAnswered = [];
-  if (type === 'vocab') lessonQuestions = vocabQuestions;
-  else if (type === 'listen') lessonQuestions = listeningQuestions;
-  else lessonQuestions = readingQuestions;
+  if (type === 'vocab') {
+    lessonQs = shuffleArray(vocabData).slice(0, 20);
+  } else if (type === 'listen') {
+    lessonQs = shuffleArray(listeningData).slice(0, 10);
+  } else {
+    currentReadingPassage = Math.floor(Math.random() * readingPassages.length);
+    lessonQs = readingPassages[currentReadingPassage].questions;
+  }
   setNav('lesson');
   renderQuestion();
 }
@@ -351,128 +700,214 @@ function startLesson(type) {
 function renderQuestion() {
   hideFeedback();
   if (currentLesson === 'read') { renderReadingLesson(); return; }
-  const q = lessonQuestions[currentQ];
-  const pct = Math.round((currentQ / lessonQuestions.length) * 100);
-  let bodyHTML = '';
+  var q = lessonQs[currentQ];
+  var pct = Math.round((currentQ / lessonQs.length) * 100);
+  var bodyHTML = '';
+
   if (currentLesson === 'vocab') {
-    bodyHTML = `
-      <div class="lesson-type-badge">単語・語彙</div>
-      <div class="lesson-question">${q.word} <span style="font-size:14px;color:var(--text-light);font-weight:600">${q.phonetic}</span></div>
-      <div class="lesson-sub">"${q.sentence}"</div>
-      <div class="choices choices-2col" id="choices">
-        ${q.choices.map((c, i) => `<button class="choice" onclick="selectChoice(this,${i})">${c}</button>`).join('')}
-      </div>
-      <button class="check-btn disabled" id="check-btn" onclick="checkAnswer()">確認する</button>`;
+    var opts = shuffleOpts(q.choices.map(function(c, i) { return { text: c, ok: i === q.correct }; }));
+    bodyHTML =
+      '<div class="lesson-type-badge">単語・語彙</div>' +
+      '<div class="lesson-question">' + q.word + ' <span style="font-size:14px;color:var(--text-light);font-weight:600">' + q.phonetic + '</span></div>' +
+      '<div class="lesson-sub">"' + q.sentence + '"</div>' +
+      '<div class="choices-2col" id="choices">' +
+        opts.map(function(o, i) { return '<button class="choice" onclick="selectVocabChoice(this,' + i + ',' + o.ok + ')">' + o.text + '</button>'; }).join('') +
+      '</div>' +
+      '<button class="check-btn disabled" id="check-btn" onclick="checkVocabAnswer()">確認する</button>';
   } else {
-    bodyHTML = `
-      <div class="lesson-type-badge">リスニング</div>
-      <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:8px">${q.title}</div>
-      <div class="lesson-sub">${q.script.map(s => `<div>${s}</div>`).join('')}</div>
-      <div class="lesson-question" style="font-size:15px;margin-bottom:16px">Q: ${q.q}</div>
-      <div class="choices" id="choices">
-        ${q.choices.map((c, i) => `<button class="choice" onclick="selectChoice(this,${i})"><span style="color:var(--blue);font-weight:800;margin-right:8px">${String.fromCharCode(65+i)}</span>${c}</button>`).join('')}
-      </div>
-      <button class="check-btn disabled" id="check-btn" onclick="checkAnswer()">確認する</button>`;
+    var btnId = 'play-' + currentQ;
+    bodyHTML =
+      '<div class="lesson-type-badge">リスニング</div>' +
+      '<div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:8px">' + q.title + '</div>' +
+      '<div class="audio-player">' +
+        '<button class="play-btn" id="' + btnId + '" onclick="speakCurrent(\'' + btnId + '\')">▶</button>' +
+        '<div style="flex:1">' +
+          '<div style="font-size:13px;font-weight:700">🔊 会話を聞く</div>' +
+          '<div style="font-size:11px;color:var(--text-light)">▶ を押して音声を再生（何度でもOK）</div>' +
+          '<div id="play-count-' + btnId + '" style="font-size:11px;color:var(--blue);font-weight:700;margin-top:2px"></div>' +
+        '</div>' +
+        '<div class="audio-wave" id="audio-wave-' + btnId + '" style="display:none"><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div></div>' +
+      '</div>' +
+      '<div class="script-box">' + q.script.map(function(s) { return '<div>' + s + '</div>'; }).join('') + '</div>' +
+      '<div style="font-size:14px;font-weight:800;margin-bottom:14px">Q: ' + q.q + '</div>' +
+      '<div class="choices" id="choices">' +
+        q.choices.map(function(c, i) { return '<button class="choice" onclick="selectChoice(this,' + i + ')"><span style="color:var(--blue);font-weight:800;margin-right:8px">' + String.fromCharCode(65+i) + '</span>' + c + '</button>'; }).join('') +
+      '</div>' +
+      '<button class="check-btn disabled" id="check-btn" onclick="checkAnswer()">確認する</button>';
   }
-  document.getElementById('screen-lesson').innerHTML = `
-    <div class="lesson-header">
-      <button class="back-btn" onclick="showHome()"><i class="ti ti-x"></i></button>
-      <div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width:${pct}%"></div></div>
-      <div class="hearts">${'❤️'.repeat(state.hearts)}</div>
-    </div>
-    <div class="lesson-body">${bodyHTML}</div>`;
+
+  document.getElementById('screen-lesson').innerHTML =
+    '<div class="lesson-header">' +
+      '<button class="back-btn" onclick="goHome()">✕</button>' +
+      '<div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width:' + pct + '%"></div></div>' +
+      '<div>' + '❤️'.repeat(Math.max(0, state.hearts)) + '</div>' +
+    '</div>' +
+    '<div class="lesson-body">' + bodyHTML + '</div>';
   selectedChoice = null;
   answered = false;
 }
 
-function renderReadingLesson() {
-  const total = readingQuestions.length;
-  const done = readingAnswered.filter(x => x !== undefined).length;
-  const pct = Math.round((done / total) * 100);
-  const q = readingQuestions[currentQ];
-  const isAnswered = readingAnswered[currentQ] !== undefined;
-  const allDone = done === total;
-  document.getElementById('screen-lesson').innerHTML = `
-    <div class="lesson-header">
-      <button class="back-btn" onclick="showHome()"><i class="ti ti-x"></i></button>
-      <div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width:${pct}%"></div></div>
-      <div class="hearts">${'❤️'.repeat(state.hearts)}</div>
-    </div>
-    <div class="lesson-body">
-      <div class="lesson-type-badge">長文読解</div>
-      <div class="passage-box">${readingPassage}</div>
-      <div class="q-nav">
-        ${readingQuestions.map((_, i) => `<button class="q-dot ${i===currentQ?'active':''} ${readingAnswered[i]===true?'done-ok':readingAnswered[i]===false?'done-ng':''}" onclick="jumpReadingQ(${i})">${i+1}</button>`).join('')}
-      </div>
-      <div class="lesson-question" style="font-size:14px;margin-bottom:14px">Q${currentQ+1}: ${q.q}</div>
-      <div class="choices" id="choices">
-        ${q.choices.map((c, i) => `<button class="choice ${isAnswered?(i===q.correct?'correct':(readingAnswered[currentQ]===false&&i===q.choices.indexOf(q.choices[i])?'':'')):''}
-          ${isAnswered&&i!==q.correct&&readingAnswered[currentQ]===false?'':''}" 
-          ${isAnswered?'disabled':''} onclick="checkReadingAnswer(this,${i},${i===q.correct})">
-          <span style="color:var(--blue);font-weight:800;margin-right:8px">${String.fromCharCode(65+i)}</span>${c}</button>`).join('')}
-      </div>
-      ${isAnswered && currentQ < total-1 ? `<button class="check-btn ready" style="margin-top:16px" onclick="jumpReadingQ(${currentQ+1})">次の問題 →</button>` : ''}
-      ${allDone ? `<button class="check-btn ready" style="margin-top:16px;background:var(--purple);box-shadow:0 4px 0 #9900CC" onclick="completeLesson()">レッスン完了！</button>` : ''}
-    </div>`;
-  if (isAnswered) showFeedback(readingAnswered[currentQ], q.choices[q.correct], q.ex, true);
+function shuffleArray(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
 }
 
-function jumpReadingQ(i) { currentQ = i; renderReadingLesson(); }
+function shuffleOpts(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
 
-function checkReadingAnswer(btn, idx, correct) {
-  document.querySelectorAll('#choices .choice').forEach((b, i) => {
+var vocabCorrectIdx = null;
+function selectVocabChoice(btn, idx, ok) {
+  if (answered) return;
+  document.querySelectorAll('#choices .choice').forEach(function(b) { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  selectedChoice = idx;
+  vocabCorrectIdx = ok;
+  var cb = document.getElementById('check-btn');
+  if (cb) cb.className = 'check-btn ready';
+}
+
+function checkVocabAnswer() {
+  if (selectedChoice === null || answered) return;
+  answered = true;
+  var ok = vocabCorrectIdx;
+  document.querySelectorAll('#choices .choice').forEach(function(b, i) {
     b.onclick = null; b.disabled = true;
-    if (i === readingQuestions[currentQ].correct) b.classList.add('correct');
   });
-  if (!correct) btn.classList.add('wrong');
-  readingAnswered[currentQ] = correct;
-  if (correct) { lessonCorrect++; state.totalCorrect++; }
-  else if (state.hearts > 0) state.hearts--;
+  var selected = document.querySelectorAll('#choices .choice')[selectedChoice];
+  if (ok) { selected.classList.add('correct'); }
+  else {
+    selected.classList.add('wrong');
+    document.querySelectorAll('#choices .choice').forEach(function(b) {
+      if (b.textContent === vocabData[currentQ].choices[vocabData[currentQ].correct]) b.classList.add('correct');
+    });
+  }
+  if (ok) { lessonCorrect++; state.totalCorrect++; } else if (state.hearts > 0) state.hearts--;
   state.totalAnswered++;
-  const q = readingQuestions[currentQ];
-  const allDone = readingAnswered.filter(x=>x!==undefined).length === readingQuestions.length;
-  showFeedback(correct, q.choices[q.correct], q.ex, true);
-  document.getElementById('fb-next').textContent = allDone ? 'レッスン完了！' : '次の問題 →';
-  document.getElementById('fb-next').onclick = allDone ? completeLesson : () => jumpReadingQ(currentQ+1);
+  showFeedback(ok, '', '', false);
   saveState();
 }
 
 function selectChoice(btn, idx) {
   if (answered) return;
-  document.querySelectorAll('#choices .choice').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('#choices .choice').forEach(function(b) { b.classList.remove('selected'); });
   btn.classList.add('selected');
   selectedChoice = idx;
-  const cb = document.getElementById('check-btn');
+  var cb = document.getElementById('check-btn');
   if (cb) cb.className = 'check-btn ready';
 }
 
 function checkAnswer() {
   if (selectedChoice === null || answered) return;
   answered = true;
-  const q = lessonQuestions[currentQ];
-  const correct = selectedChoice === q.correct;
-  document.querySelectorAll('#choices .choice').forEach((b, i) => {
+  var q = lessonQs[currentQ];
+  var ok = selectedChoice === q.correct;
+  document.querySelectorAll('#choices .choice').forEach(function(b, i) {
     b.onclick = null; b.disabled = true;
     if (i === q.correct) b.classList.add('correct');
   });
-  document.querySelectorAll('#choices .choice')[selectedChoice].classList.add(correct ? '' : 'wrong');
-  if (correct) { lessonCorrect++; state.totalCorrect++; }
-  else if (state.hearts > 0) state.hearts--;
+  var selBtn = document.querySelectorAll('#choices .choice')[selectedChoice];
+  if (!ok) selBtn.classList.add('wrong');
+  if (ok) { lessonCorrect++; state.totalCorrect++; } else if (state.hearts > 0) state.hearts--;
   state.totalAnswered++;
-  showFeedback(correct, q.choices[q.correct], currentLesson === 'listen' ? q.ex : '', false);
+  showFeedback(ok, q.choices[q.correct], q.ex || '', false);
   saveState();
 }
 
-function showFeedback(correct, correctAnswer, explanation, isReading) {
-  const bar = document.getElementById('feedback-bar');
-  const title = document.getElementById('fb-title');
-  const body = document.getElementById('fb-body');
-  const next = document.getElementById('fb-next');
-  bar.className = 'feedback-bar show ' + (correct ? 'correct-bar' : 'wrong-bar');
-  title.className = 'fb-title ' + (correct ? 'ok' : 'ng');
-  title.textContent = correct ? '🎉 正解！' : '😢 不正解';
-  body.textContent = correct ? (explanation || '素晴らしい！') : `正解は「${correctAnswer}」${explanation ? '。' + explanation : ''}`;
-  next.className = 'fb-next ' + (correct ? 'ok' : 'ng');
+// ── READING ──
+function renderReadingLesson() {
+  var total = readingQs.length;
+  var done = readingAnswered.filter(function(x) { return x !== undefined; }).length;
+  var pct = Math.round((done / total) * 100);
+  var q = readingQs[currentQ];
+  var isAnswered = readingAnswered[currentQ] !== undefined;
+  var allDone = done === total;
+
+  var dotHTML = readingQs.map(function(_, i) {
+    var cls = 'q-dot';
+    if (i === currentQ) cls += ' q-active';
+    if (readingAnswered[i] === true) cls += ' q-ok';
+    else if (readingAnswered[i] === false) cls += ' q-ng';
+    return '<button class="' + cls + '" onclick="jumpReadingQ(' + i + ')">' + (i+1) + '</button>';
+  }).join('');
+
+  var choicesHTML = q.choices.map(function(c, i) {
+    var cls = 'choice';
+    if (isAnswered) {
+      if (i === q.correct) cls += ' correct';
+      else if (readingAnswered[currentQ] === false && i === currentQ) cls += ' wrong';
+    }
+    return '<button class="' + cls + '"' + (isAnswered ? ' disabled' : '') + ' onclick="checkReadingAnswer(this,' + i + ',' + (i === q.correct ? 'true' : 'false') + ')"><span style="color:var(--blue);font-weight:800;margin-right:8px">' + String.fromCharCode(65+i) + '</span>' + c + '</button>';
+  }).join('');
+
+  var extraBtn = '';
+  if (isAnswered && currentQ < total-1) extraBtn = '<button class="check-btn ready" style="margin-top:16px" onclick="jumpReadingQ(' + (currentQ+1) + ')">次の問題 →</button>';
+  if (allDone) extraBtn = '<button class="check-btn ready" style="margin-top:16px;background:var(--purple);box-shadow:0 4px 0 #9900CC" onclick="completeLesson()">レッスン完了！</button>';
+
+  document.getElementById('screen-lesson').innerHTML =
+    '<div class="lesson-header">' +
+      '<button class="back-btn" onclick="goHome()">✕</button>' +
+      '<div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width:' + pct + '%"></div></div>' +
+      '<div>' + '❤️'.repeat(Math.max(0, state.hearts)) + '</div>' +
+    '</div>' +
+    '<div class="lesson-body">' +
+      '<div class="lesson-type-badge">長文読解 — ' + readingPassages[currentReadingPassage].title + '</div>' +
+      '<div class="passage-box">' + readingPassages[currentReadingPassage].passage + '</div>' +
+      '<div class="q-nav">' + dotHTML + '</div>' +
+      '<div style="font-size:14px;font-weight:800;margin-bottom:14px">Q' + (currentQ+1) + ': ' + q.q + '</div>' +
+      '<div class="choices" id="choices">' + choicesHTML + '</div>' +
+      extraBtn +
+    '</div>';
+
+  if (isAnswered) {
+    showFeedback(readingAnswered[currentQ], q.choices[q.correct], q.ex, true);
+    var nb = document.getElementById('fb-next');
+    if (allDone) { nb.textContent = 'レッスン完了！'; nb.onclick = completeLesson; }
+    else { nb.textContent = '次の問題 →'; nb.onclick = function() { jumpReadingQ(currentQ+1); }; }
+  }
+}
+
+function jumpReadingQ(i) { currentQ = i; renderReadingLesson(); }
+
+function checkReadingAnswer(btn, idx, ok) {
+  document.querySelectorAll('#choices .choice').forEach(function(b, i) {
+    b.onclick = null; b.disabled = true;
+    if (i === readingQs[currentQ].correct) b.classList.add('correct');
+  });
+  if (!ok) btn.classList.add('wrong');
+  readingAnswered[currentQ] = ok;
+  if (ok) { lessonCorrect++; state.totalCorrect++; } else if (state.hearts > 0) state.hearts--;
+  state.totalAnswered++;
+  var total = readingQs.length;
+  var allDone = readingAnswered.filter(function(x) { return x !== undefined; }).length === total;
+  showFeedback(ok, readingQs[currentQ].choices[readingQs[currentQ].correct], readingQs[currentQ].ex, true);
+  var nb = document.getElementById('fb-next');
+  if (allDone) { nb.textContent = 'レッスン完了！'; nb.onclick = completeLesson; }
+  else { nb.textContent = '次の問題 →'; nb.onclick = function() { jumpReadingQ(currentQ+1); }; }
+  saveState();
+}
+
+// ── FEEDBACK ──
+function showFeedback(ok, correctAnswer, ex, isReading) {
+  playSound(ok ? 'correct' : 'wrong');
+  var bar = document.getElementById('feedback-bar');
+  var title = document.getElementById('fb-title');
+  var body = document.getElementById('fb-body');
+  var next = document.getElementById('fb-next');
+  bar.className = 'feedback-bar show ' + (ok ? 'correct-bar' : 'wrong-bar');
+  title.className = 'fb-title ' + (ok ? 'ok' : 'ng');
+  title.textContent = ok ? '🎉 正解！' : '😢 不正解';
+  body.textContent = ok ? (ex || '素晴らしい！') : ('正解は「' + correctAnswer + '」' + (ex ? '。' + ex : ''));
+  next.className = 'fb-next ' + (ok ? 'ok' : 'ng');
   if (!isReading) { next.textContent = '次へ →'; next.onclick = nextQuestion; }
 }
 
@@ -481,39 +916,48 @@ function hideFeedback() { document.getElementById('feedback-bar').className = 'f
 function nextQuestion() {
   hideFeedback();
   currentQ++;
-  if (currentQ >= lessonQuestions.length) completeLesson();
+  if (currentQ >= lessonQs.length) completeLesson();
   else renderQuestion();
 }
 
 function completeLesson() {
+  if (speechSynth) speechSynth.cancel();
+  isSpeaking = false;
   hideFeedback();
-  const total = currentLesson === 'read' ? readingQuestions.length : lessonQuestions.length;
-  const xpEarned = lessonCorrect * 10;
+  var total = currentLesson === 'read' ? readingQs.length : lessonQs.length;
+  var xpEarned = lessonCorrect * 10;
   state.xp += xpEarned;
   state.gems += 5;
   state.lessonsCompleted++;
-  const acc = Math.round(lessonCorrect / total * 100);
-  const stars = acc >= 90 ? 3 : acc >= 60 ? 2 : 1;
+  var acc = Math.round(lessonCorrect / total * 100);
+  var stars = acc >= 90 ? 3 : acc >= 60 ? 2 : 1;
   if (state.unitsProgress[currentLesson] < stars) state.unitsProgress[currentLesson] = stars;
   saveState();
-  document.getElementById('screen-lesson').innerHTML = `
-    <div class="complete-screen">
-      <div class="complete-emoji">${acc >= 90 ? '🏆' : acc >= 60 ? '⭐' : '👍'}</div>
-      <div class="complete-title">レッスン完了！</div>
-      <div class="complete-sub">${acc >= 90 ? '完璧な出来栄え！' : acc >= 60 ? 'よくできました！' : '次回はもっと頑張ろう！'}</div>
-      <div class="stat-row">
-        <div class="stat-box"><div class="stat-val">+${xpEarned}</div><div class="stat-lbl">XP獲得</div></div>
-        <div class="stat-box"><div class="stat-val">${acc}%</div><div class="stat-lbl">正解率</div></div>
-        <div class="stat-box"><div class="stat-val">⭐${stars}</div><div class="stat-lbl">スター</div></div>
-      </div>
-      <button class="home-btn" onclick="showHome()">ホームへ戻る</button>
-    </div>`;
+  document.getElementById('screen-lesson').innerHTML =
+    '<div class="complete-screen">' +
+      '<div class="complete-emoji">' + (acc >= 90 ? '🏆' : acc >= 60 ? '⭐' : '👍') + '</div>' +
+      '<div class="complete-title">レッスン完了！</div>' +
+      '<div class="complete-sub">' + (acc >= 90 ? '完璧な出来栄え！' : acc >= 60 ? 'よくできました！' : '次回はもっと頑張ろう！') + '</div>' +
+      '<div class="stat-row">' +
+        '<div class="stat-box"><div class="stat-val">+' + xpEarned + '</div><div class="stat-lbl">XP獲得</div></div>' +
+        '<div class="stat-box"><div class="stat-val">' + acc + '%</div><div class="stat-lbl">正解率</div></div>' +
+        '<div class="stat-box"><div class="stat-val">⭐' + stars + '</div><div class="stat-lbl">スター</div></div>' +
+      '</div>' +
+      '<button class="home-btn" onclick="showHome()">ホームへ戻る</button>' +
+    '</div>';
+}
+
+// ── NAVIGATION ──
+function goHome() {
+  if (speechSynth) speechSynth.cancel();
+  isSpeaking = false;
+  showHome();
 }
 
 function setNav(screen) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const nav = document.querySelector('.bottom-nav');
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  var nav = document.querySelector('.bottom-nav');
   if (screen === 'home') {
     document.getElementById('screen-home').classList.add('active');
     document.getElementById('nav-home').classList.add('active');
