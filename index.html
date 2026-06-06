@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英検2級対策アプリ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --green: #58CC02;
+  --green-dark: #46A302;
+  --green-light: #D7FFB8;
+  --blue: #1CB0F6;
+  --blue-light: #DDF4FF;
+  --yellow: #FFD900;
+  --yellow-dark: #CE9200;
+  --red: #FF4B4B;
+  --red-light: #FFDFE0;
+  --purple: #CE82FF;
+  --purple-light: #F1D0FF;
+  --orange: #FF9600;
+  --bg: #fff;
+  --border: #E5E5E5;
+  --text: #3C3C3C;
+  --text-light: #777;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: #F7F7F7; color: var(--text); }
+.app { max-width: 480px; margin: 0 auto; min-height: 100vh; background: #fff; display: flex; flex-direction: column; position: relative; }
+
+/* NAV */
+.bottom-nav { display: flex; border-top: 2px solid var(--border); background: #fff; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 100; }
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 10px 0 8px; gap: 3px; cursor: pointer; font-size: 11px; font-weight: 700; color: var(--text-light); border-top: 3px solid transparent; }
+.nav-item.active { color: var(--blue); border-top-color: var(--blue); }
+.nav-item i { font-size: 22px; }
+
+/* SCREENS */
+.screen { display: none; flex: 1; overflow-y: auto; padding-bottom: 80px; }
+.screen.active { display: block; }
+
+/* HOME */
+.home-header { padding: 20px 20px 0; display: flex; align-items: center; justify-content: space-between; }
+.streak-badge { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 16px; color: var(--orange); }
+.xp-badge { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 16px; color: var(--purple); }
+.gems-badge { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 16px; color: var(--blue); }
+
+.mascot-banner { margin: 16px 20px; background: linear-gradient(135deg, #E6F9FF 0%, #F0FFF0 100%); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; gap: 14px; border: 2px solid var(--border); }
+.mascot { font-size: 52px; line-height: 1; }
+.mascot-text h2 { font-size: 15px; font-weight: 800; color: var(--text); }
+.mascot-text p { font-size: 13px; color: var(--text-light); margin-top: 2px; font-weight: 600; }
+
+.section-label { font-size: 13px; font-weight: 800; color: var(--text-light); letter-spacing: 0.05em; text-transform: uppercase; padding: 0 20px; margin: 16px 0 8px; }
+
+.unit-path { padding: 0 20px 20px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+.path-node { display: flex; flex-direction: column; align-items: center; }
+.node-btn { width: 72px; height: 72px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 6px 0 rgba(0,0,0,0.18); transition: transform 0.1s, box-shadow 0.1s; }
+.node-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,0.18); }
+.node-btn.vocab { background: var(--green); }
+.node-btn.listen { background: var(--blue); }
+.node-btn.read { background: var(--purple); }
+.node-connector { width: 4px; height: 28px; background: var(--border); border-radius: 2px; }
+.node-label { font-size: 12px; font-weight: 800; color: var(--text-light); margin-top: 6px; margin-bottom: 2px; }
+.node-stars { display: flex; gap: 2px; margin-bottom: 12px; }
+.node-stars span { font-size: 14px; }
+
+.daily-goal-card { margin: 8px 20px; background: var(--blue-light); border-radius: var(--radius); padding: 14px 16px; border: 2px solid #B3E5FC; }
+.daily-goal-title { font-size: 13px; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
+.xp-bar-wrap { height: 14px; background: #fff; border-radius: 99px; overflow: hidden; border: 2px solid #B3E5FC; }
+.xp-bar-fill { height: 100%; background: var(--blue); border-radius: 99px; transition: width 0.4s cubic-bezier(.34,1.56,.64,1); }
+.xp-bar-label { font-size: 12px; font-weight: 700; color: var(--blue); margin-top: 6px; text-align: right; }
+
+/* LESSON */
+.lesson-header { padding: 16px 20px 0; display: flex; align-items: center; gap: 12px; }
+.back-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-light); }
+.lesson-progress-bar { flex: 1; height: 14px; background: #F0F0F0; border-radius: 99px; overflow: hidden; border: 2px solid var(--border); }
+.lesson-progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width 0.4s cubic-bezier(.34,1.56,.64,1); }
+.hearts { display: flex; gap: 4px; }
+
+.lesson-body { padding: 20px; }
+.lesson-type-badge { display: inline-block; background: var(--green-light); color: var(--green-dark); font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+.lesson-question { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
+.lesson-sub { font-size: 13px; color: var(--text-light); font-weight: 600; font-style: italic; background: #F7F7F7; border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 20px; line-height: 1.6; }
+
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice { padding: 14px 16px; border-radius: var(--radius-sm); border: 2px solid var(--border); background: #fff; font-size: 15px; font-weight: 700; cursor: pointer; text-align: left; color: var(--text); transition: border-color 0.15s, background 0.15s; box-shadow: 0 4px 0 var(--border); }
+.choice:hover:not([disabled]) { border-color: var(--blue); background: var(--blue-light); }
+.choice.selected { border-color: var(--blue); background: var(--blue-light); box-shadow: 0 4px 0 #B3E5FC; }
+.choice.correct { border-color: var(--green); background: var(--green-light); box-shadow: 0 4px 0 #A0D870; color: var(--green-dark); }
+.choice.wrong { border-color: var(--red); background: var(--red-light); box-shadow: 0 4px 0 #FFACAC; color: var(--red); }
+.choices-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.check-btn { width: 100%; padding: 16px; border-radius: var(--radius-sm); border: none; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 16px; }
+.check-btn.ready { background: var(--green); color: #fff; box-shadow: 0 4px 0 var(--green-dark); }
+.check-btn.ready:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--green-dark); }
+.check-btn.disabled { background: #E5E5E5; color: #AFAFAF; box-shadow: 0 4px 0 #CACACA; cursor: default; }
+
+.feedback-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; padding: 16px 20px 24px; display: none; z-index: 200; }
+.feedback-bar.show { display: block; }
+.feedback-bar.correct-bar { background: var(--green-light); border-top: 3px solid var(--green); }
+.feedback-bar.wrong-bar { background: var(--red-light); border-top: 3px solid var(--red); }
+.fb-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+.fb-title.ok { color: var(--green-dark); }
+.fb-title.ng { color: var(--red); }
+.fb-body { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 12px; line-height: 1.6; }
+.fb-next { width: 100%; padding: 14px; border-radius: var(--radius-sm); border: none; font-size: 15px; font-weight: 800; cursor: pointer; }
+.fb-next.ok { background: var(--green); color: #fff; box-shadow: 0 4px 0 var(--green-dark); }
+.fb-next.ng { background: var(--red); color: #fff; box-shadow: 0 4px 0 #CC0000; }
+
+/* COMPLETE */
+.complete-screen { text-align: center; padding: 40px 20px; }
+.complete-emoji { font-size: 80px; margin-bottom: 16px; animation: pop 0.5s cubic-bezier(.34,1.56,.64,1); }
+@keyframes pop { 0%{transform:scale(0)} 100%{transform:scale(1)} }
+.complete-title { font-size: 26px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+.complete-sub { font-size: 15px; color: var(--text-light); font-weight: 600; margin-bottom: 32px; }
+.stat-row { display: flex; justify-content: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+.stat-box { background: #F7F7F7; border-radius: var(--radius); padding: 16px 20px; text-align: center; border: 2px solid var(--border); min-width: 80px; }
+.stat-val { font-size: 26px; font-weight: 900; color: var(--text); }
+.stat-lbl { font-size: 12px; font-weight: 700; color: var(--text-light); margin-top: 2px; }
+.home-btn { padding: 16px 40px; border-radius: var(--radius-sm); border: none; background: var(--green); color: #fff; font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 var(--green-dark); }
+
+/* PROFILE */
+.profile-header { padding: 24px 20px 16px; text-align: center; }
+.avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--purple)); display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 12px; border: 4px solid var(--border); }
+.profile-name { font-size: 20px; font-weight: 900; }
+.profile-sub { font-size: 13px; color: var(--text-light); font-weight: 600; margin-top: 2px; }
+.stats-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px 16px; }
+.stats-card { background: #F7F7F7; border-radius: var(--radius); padding: 16px; border: 2px solid var(--border); text-align: center; }
+.stats-card-val { font-size: 26px; font-weight: 900; }
+.stats-card-lbl { font-size: 12px; font-weight: 700; color: var(--text-light); margin-top: 2px; }
+.stats-card.streak .stats-card-val { color: var(--orange); }
+.stats-card.xp .stats-card-val { color: var(--purple); }
+.stats-card.correct .stats-card-val { color: var(--green); }
+.stats-card.lessons .stats-card-val { color: var(--blue); }
+.achievements-section { padding: 0 20px 20px; }
+.achievements-title { font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+.badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.badge-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.badge-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; border: 3px solid; }
+.badge-icon.earned { border-color: var(--yellow); background: #FFFDE7; }
+.badge-icon.locked { border-color: var(--border); background: #F7F7F7; filter: grayscale(1) opacity(0.4); }
+.badge-name { font-size: 10px; font-weight: 700; color: var(--text-light); text-align: center; }
+
+/* READING */
+.passage-box { background: #F7F7F7; border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 16px; font-size: 13.5px; line-height: 1.9; color: var(--text); max-height: 220px; overflow-y: auto; border: 2px solid var(--border); }
+.passage-box p { margin-bottom: 0.7rem; }
+.passage-box p:last-child { margin-bottom: 0; }
+.q-nav { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.q-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border); background: #fff; font-size: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-light); }
+.q-dot.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+.q-dot.done-ok { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
+.q-dot.done-ng { background: var(--red-light); border-color: var(--red); color: var(--red); }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="screen active" id="screen-home"></div>
+  <div class="screen" id="screen-lesson"></div>
+  <div class="screen" id="screen-profile"></div>
+
+  <div class="feedback-bar" id="feedback-bar">
+    <div class="fb-title" id="fb-title"></div>
+    <div class="fb-body" id="fb-body"></div>
+    <button class="fb-next" id="fb-next"></button>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" id="nav-home" onclick="showHome()">
+      <i class="ti ti-home"></i>ホーム
+    </div>
+    <div class="nav-item" id="nav-profile" onclick="showProfile()">
+      <i class="ti ti-user-circle"></i>プロフィール
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE (localStorage で永続化) ──
+const STORAGE_KEY = 'eiken2_state_v1';
+
+let state = {
+  xp: 0, streak: 1, gems: 50, hearts: 5,
+  lessonsCompleted: 0, totalCorrect: 0, totalAnswered: 0,
+  unitsProgress: { vocab: 0, listen: 0, read: 0 },
+  lastDate: new Date().toDateString(),
+};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // ストリーク更新
+      const today = new Date().toDateString();
+      const last = new Date(parsed.lastDate);
+      const diff = Math.floor((new Date(today) - last) / 86400000);
+      if (diff === 1) { parsed.streak = (parsed.streak || 1) + 1; parsed.hearts = 5; }
+      else if (diff > 1) { parsed.streak = 1; parsed.hearts = 5; }
+      parsed.lastDate = today;
+      state = { ...state, ...parsed };
+    }
+  } catch(e) {}
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+// ── DATA ──
+const vocabQuestions = [
+  { word: "perceive", phonetic: "/pəˈsiːv/", sentence: 'Many people ___ studying abroad as a great opportunity to grow.', choices: ["知覚する・理解する","拒絶する・断る","悪化させる","依存する"], correct: 0 },
+  { word: "inevitable", phonetic: "/ɪnˈevɪtəbl/", sentence: 'Change is ___; no matter how much we try to resist it, it always comes.', choices: ["避けられない・必然的な","信頼できる","考えられない","効果的な"], correct: 0 },
+  { word: "diminish", phonetic: "/dɪˈmɪnɪʃ/", sentence: 'Lack of sleep can significantly ___ a person\'s ability to concentrate.', choices: ["減少する・弱める","強化する・増大させる","確認する・証明する","分類する・整理する"], correct: 0 },
+  { word: "obligation", phonetic: "/ˌɒblɪˈɡeɪʃn/", sentence: 'Citizens have an ___ to follow the laws of their country.', choices: ["義務・責任","機会・好機","不満・苦情","推測・憶測"], correct: 0 },
+  { word: "consecutive", phonetic: "/kənˈsekjətɪv/", sentence: 'The team won five ___ games, setting a new league record.', choices: ["連続した・続けての","一時的な・瞬間的な","自発的な・任意の","相互的な・互いの"], correct: 0 },
+  { word: "ambiguous", phonetic: "/æmˈbɪɡjuəs/", sentence: 'The instructions were so ___ that no one knew what to do.', choices: ["あいまいな・不明確な","明確な・はっきりした","退屈な・単調な","攻撃的な・好戦的な"], correct: 0 },
+  { word: "compensate", phonetic: "/ˈkɒmpənseɪt/", sentence: 'The company agreed to ___ workers for the extra hours they worked.', choices: ["補償する・埋め合わせる","強調する・力説する","悪化させる・増やす","比較する・対比する"], correct: 0 },
+];
+
+const listeningQuestions = [
+  { title: "会話 1 — 大学にて", script: ["W: Professor, I've been struggling with the essay assignment.", "M: Have you done all the required readings? Your argument should come from those sources.", "W: I've read most of them, but I'm not sure how to connect them.", "M: Try identifying the common themes first. Then build your argument around those."], q: "What does the professor suggest the student do first?", choices: ["Submit a draft before class", "Read more sources online", "Find common themes in the readings", "Visit the library immediately"], correct: 2, ex: '"Try identifying the common themes first" が根拠。まず共通テーマを見つけることを勧めています。' },
+  { title: "会話 2 — 電話にて", script: ["M: I'd like to book a table for four this Saturday evening.", "W: I'm sorry, we're fully booked on Saturday. We have availability on Friday or Sunday lunch.", "M: Friday won't work. What time is Sunday lunch available?", "W: We have slots at 12:00 and 1:30."], q: "Why can't the man book a table on Saturday?", choices: ["The restaurant is closed on Saturdays", "He is unavailable on Saturday", "No tables are left on Saturday", "Only online bookings are accepted"], correct: 2, ex: '"fully booked on Saturday" = 満席。"No tables are left" が正解の言い換えです。' },
+  { title: "会話 3 — 会社にて", script: ["W: Did you see the announcement about the new environmental policy?", "M: Yes. The company is going to stop using plastic cups and bottles in all offices by next month.", "W: I heard they're also planning to install solar panels on the roof.", "M: Really? It sounds like they're taking sustainability seriously."], q: "What change will the company make by next month?", choices: ["Install solar panels on the roof", "Reduce the number of employees", "Replace plastic cups and bottles with alternatives", "Switch to a fully remote working model"], correct: 2, ex: '"stop using plastic cups and bottles in all offices by next month" が直接の根拠です。' },
+  { title: "会話 4 — 駅にて", script: ["M: Excuse me, I think I left my backpack on the train. It arrived at this platform about ten minutes ago.", "W: You'll need to go to the Lost and Found office on the second floor.", "M: Is there a chance it's already been sent there?", "W: If a staff member found it, yes. The train departs again in about 20 minutes, so please hurry."], q: "What does the woman advise the man to do?", choices: ["Wait at the platform for the next train", "Call the train company's customer service", "Go to the Lost and Found office on the second floor", "Ask other passengers if they saw his backpack"], correct: 2, ex: '"You\'ll need to go to the Lost and Found office on the second floor" — 2階の遺失物取扱所に行くよう案内しています。' },
+  { title: "会話 5 — 病院にて", script: ["W: Dr. Kato, I've been having headaches every morning for two weeks.", "M: Are you sleeping well? And how much water are you drinking each day?", "W: I get about five hours of sleep and maybe one or two glasses of water.", "M: I'd like you to try getting at least seven hours and drinking eight glasses of water before we consider any medication."], q: "What does the doctor recommend as an initial step?", choices: ["Prescribe medication immediately", "Refer the patient to a specialist", "Improve sleep and increase water intake", "Perform a brain scan"], correct: 2, ex: '"getting at least seven hours of sleep and drinking eight glasses of water before we consider any medication" — まず生活習慣の改善を勧めています。' },
+];
+
+const readingPassage = `<p>In recent decades, the concept of remote work — performing job duties from a location outside the traditional office — has gained considerable attention. While the idea existed long before the twenty-first century, it was the rapid advancement of communication technology and, more dramatically, the global outbreak of COVID-19 in 2020 that transformed remote work from a privilege enjoyed by a small number of professionals into a widespread practice affecting millions of workers worldwide.</p><p>Proponents of remote work point to several significant advantages. Studies have shown that many employees report higher levels of job satisfaction and productivity when working from home, partly because they can avoid long commutes, set their own schedules, and work in environments tailored to their personal preferences. Employers, too, have benefited in some cases, with reduced overhead costs resulting from smaller office spaces and the ability to hire talent from a broader geographic area.</p><p>However, remote work is not without its drawbacks. A recurring concern is the blurring of boundaries between professional and personal life. Without the physical separation of an office, some workers find it difficult to "switch off," leading to longer working hours and increased stress. Social isolation is another issue; the casual conversations and spontaneous collaboration that occur naturally in an office environment are difficult to replicate online.</p><p>Organizations have responded to these challenges in various ways. Many companies have adopted a "hybrid" model, in which employees divide their time between working remotely and attending the office. This approach attempts to balance the flexibility valued by workers with the collaborative benefits of in-person interaction.</p>`;
+
+const readingQuestions = [
+  { q: "What event most dramatically accelerated the adoption of remote work?", choices: ["Invention of high-speed internet", "Introduction of smartphones", "The global outbreak of COVID-19 in 2020", "A worldwide shortage of office space"], correct: 2, ex: "第1段落 "the global outbreak of COVID-19 in 2020 that transformed remote work" が根拠です。" },
+  { q: "Which is mentioned as a benefit of remote work for employers?", choices: ["Easier to monitor employees", "Reduce costs and hire from a wider area", "Workers take fewer sick days", "More frequent meetings possible"], correct: 1, ex: "第2段落 "reduced overhead costs" と "hire talent from a broader geographic area" が挙げられています。" },
+  { q: "What problem is described in the third paragraph?", choices: ["Workers lack technology", "Employees prefer offices", "Boundary between work and personal life becomes unclear", "Remote workers earn lower salaries"], correct: 2, ex: "第3段落 "the blurring of boundaries between professional and personal life" が直接の根拠です。" },
+  { q: "What is the 'hybrid' model?", choices: ["Working entirely from home", "Splitting time between home and office", "Hiring both full-time and part-time workers", "A technology connecting remote workers"], correct: 1, ex: "第4段落 "employees divide their time between working remotely and attending the office" とあります。" },
+];
+
+// ── LESSON STATE ──
+let currentLesson = null;
+let currentQ = 0;
+let lessonQuestions = [];
+let lessonCorrect = 0;
+let selectedChoice = null;
+let answered = false;
+let readingAnswered = [];
+
+// ── HOME ──
+function renderHome() {
+  const xpGoal = 50;
+  const xpPct = Math.min((state.xp % xpGoal) / xpGoal * 100, 100);
+  document.getElementById('screen-home').innerHTML = `
+    <div class="home-header">
+      <div class="streak-badge"><i class="ti ti-flame" style="font-size:22px"></i> ${state.streak}</div>
+      <div class="xp-badge"><i class="ti ti-bolt" style="font-size:22px"></i> ${state.xp}</div>
+      <div class="gems-badge"><i class="ti ti-diamond" style="font-size:22px"></i> ${state.gems}</div>
+    </div>
+    <div class="mascot-banner">
+      <div class="mascot">🦉</div>
+      <div class="mascot-text">
+        <h2>英検2級を攻略しよう！</h2>
+        <p>今日のレッスンを始めよう 🎯</p>
+      </div>
+    </div>
+    <div class="daily-goal-card">
+      <div class="daily-goal-title">📅 今日の目標 — ${state.xp % xpGoal} / ${xpGoal} XP</div>
+      <div class="xp-bar-wrap"><div class="xp-bar-fill" style="width:${xpPct}%"></div></div>
+      <div class="xp-bar-label">${Math.round(xpPct)}%</div>
+    </div>
+    <div class="section-label">レッスン</div>
+    <div class="unit-path">
+      <div class="path-node">
+        <button class="node-btn vocab" onclick="startLesson('vocab')">📖</button>
+        <div class="node-label">単語・語彙</div>
+        <div class="node-stars">${renderStars(state.unitsProgress.vocab)}</div>
+      </div>
+      <div class="node-connector"></div>
+      <div class="path-node">
+        <button class="node-btn listen" onclick="startLesson('listen')">🎧</button>
+        <div class="node-label">リスニング</div>
+        <div class="node-stars">${renderStars(state.unitsProgress.listen)}</div>
+      </div>
+      <div class="node-connector"></div>
+      <div class="path-node">
+        <button class="node-btn read" onclick="startLesson('read')">📰</button>
+        <div class="node-label">長文読解</div>
+        <div class="node-stars">${renderStars(state.unitsProgress.read)}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderStars(n) {
+  return [0,1,2].map(i => `<span>${i < n ? '⭐' : '☆'}</span>`).join('');
+}
+
+// ── PROFILE ──
+function renderProfile() {
+  const acc = state.totalAnswered > 0 ? Math.round(state.totalCorrect / state.totalAnswered * 100) : 0;
+  const badges = [
+    { icon: '🔥', name: '3日連続', earned: state.streak >= 3 },
+    { icon: '📖', name: '単語マスター', earned: state.unitsProgress.vocab >= 2 },
+    { icon: '🎧', name: 'リスナー', earned: state.unitsProgress.listen >= 2 },
+    { icon: '📰', name: '読解王', earned: state.unitsProgress.read >= 2 },
+    { icon: '⭐', name: '100XP', earned: state.xp >= 100 },
+    { icon: '💎', name: 'パーフェクト', earned: acc >= 90 && state.totalAnswered >= 10 },
+    { icon: '🏆', name: '全クリア', earned: state.lessonsCompleted >= 3 },
+    { icon: '🚀', name: '伝説', earned: state.xp >= 500 },
+  ];
+  document.getElementById('screen-profile').innerHTML = `
+    <div class="profile-header">
+      <div class="avatar">🦊</div>
+      <div class="profile-name">がんばり屋さん</div>
+      <div class="profile-sub">英検2級チャレンジ中</div>
+    </div>
+    <div class="stats-cards">
+      <div class="stats-card streak"><div class="stats-card-val">🔥 ${state.streak}</div><div class="stats-card-lbl">日連続</div></div>
+      <div class="stats-card xp"><div class="stats-card-val">⚡ ${state.xp}</div><div class="stats-card-lbl">総XP</div></div>
+      <div class="stats-card correct"><div class="stats-card-val">${acc}%</div><div class="stats-card-lbl">正解率</div></div>
+      <div class="stats-card lessons"><div class="stats-card-val">${state.lessonsCompleted}</div><div class="stats-card-lbl">完了レッスン</div></div>
+    </div>
+    <div class="achievements-section">
+      <div class="achievements-title">🏅 実績</div>
+      <div class="badge-grid">
+        ${badges.map(b => `
+          <div class="badge-item">
+            <div class="badge-icon ${b.earned ? 'earned' : 'locked'}">${b.icon}</div>
+            <div class="badge-name">${b.name}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ── LESSON ──
+function startLesson(type) {
+  currentLesson = type;
+  currentQ = 0;
+  lessonCorrect = 0;
+  selectedChoice = null;
+  answered = false;
+  readingAnswered = [];
+  if (type === 'vocab') lessonQuestions = vocabQuestions;
+  else if (type === 'listen') lessonQuestions = listeningQuestions;
+  else lessonQuestions = readingQuestions;
+  setNav('lesson');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  hideFeedback();
+  if (currentLesson === 'read') { renderReadingLesson(); return; }
+  const q = lessonQuestions[currentQ];
+  const pct = Math.round((currentQ / lessonQuestions.length) * 100);
+  let bodyHTML = '';
+  if (currentLesson === 'vocab') {
+    bodyHTML = `
+      <div class="lesson-type-badge">単語・語彙</div>
+      <div class="lesson-question">${q.word} <span style="font-size:14px;color:var(--text-light);font-weight:600">${q.phonetic}</span></div>
+      <div class="lesson-sub">"${q.sentence}"</div>
+      <div class="choices choices-2col" id="choices">
+        ${q.choices.map((c, i) => `<button class="choice" onclick="selectChoice(this,${i})">${c}</button>`).join('')}
+      </div>
+      <button class="check-btn disabled" id="check-btn" onclick="checkAnswer()">確認する</button>`;
+  } else {
+    bodyHTML = `
+      <div class="lesson-type-badge">リスニング</div>
+      <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:8px">${q.title}</div>
+      <div class="lesson-sub">${q.script.map(s => `<div>${s}</div>`).join('')}</div>
+      <div class="lesson-question" style="font-size:15px;margin-bottom:16px">Q: ${q.q}</div>
+      <div class="choices" id="choices">
+        ${q.choices.map((c, i) => `<button class="choice" onclick="selectChoice(this,${i})"><span style="color:var(--blue);font-weight:800;margin-right:8px">${String.fromCharCode(65+i)}</span>${c}</button>`).join('')}
+      </div>
+      <button class="check-btn disabled" id="check-btn" onclick="checkAnswer()">確認する</button>`;
+  }
+  document.getElementById('screen-lesson').innerHTML = `
+    <div class="lesson-header">
+      <button class="back-btn" onclick="showHome()"><i class="ti ti-x"></i></button>
+      <div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width:${pct}%"></div></div>
+      <div class="hearts">${'❤️'.repeat(state.hearts)}</div>
+    </div>
+    <div class="lesson-body">${bodyHTML}</div>`;
+  selectedChoice = null;
+  answered = false;
+}
+
+function renderReadingLesson() {
+  const total = readingQuestions.length;
+  const done = readingAnswered.filter(x => x !== undefined).length;
+  const pct = Math.round((done / total) * 100);
+  const q = readingQuestions[currentQ];
+  const isAnswered = readingAnswered[currentQ] !== undefined;
+  const allDone = done === total;
+  document.getElementById('screen-lesson').innerHTML = `
+    <div class="lesson-header">
+      <button class="back-btn" onclick="showHome()"><i class="ti ti-x"></i></button>
+      <div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width:${pct}%"></div></div>
+      <div class="hearts">${'❤️'.repeat(state.hearts)}</div>
+    </div>
+    <div class="lesson-body">
+      <div class="lesson-type-badge">長文読解</div>
+      <div class="passage-box">${readingPassage}</div>
+      <div class="q-nav">
+        ${readingQuestions.map((_, i) => `<button class="q-dot ${i===currentQ?'active':''} ${readingAnswered[i]===true?'done-ok':readingAnswered[i]===false?'done-ng':''}" onclick="jumpReadingQ(${i})">${i+1}</button>`).join('')}
+      </div>
+      <div class="lesson-question" style="font-size:14px;margin-bottom:14px">Q${currentQ+1}: ${q.q}</div>
+      <div class="choices" id="choices">
+        ${q.choices.map((c, i) => `<button class="choice ${isAnswered?(i===q.correct?'correct':(readingAnswered[currentQ]===false&&i===q.choices.indexOf(q.choices[i])?'':'')):''}
+          ${isAnswered&&i!==q.correct&&readingAnswered[currentQ]===false?'':''}" 
+          ${isAnswered?'disabled':''} onclick="checkReadingAnswer(this,${i},${i===q.correct})">
+          <span style="color:var(--blue);font-weight:800;margin-right:8px">${String.fromCharCode(65+i)}</span>${c}</button>`).join('')}
+      </div>
+      ${isAnswered && currentQ < total-1 ? `<button class="check-btn ready" style="margin-top:16px" onclick="jumpReadingQ(${currentQ+1})">次の問題 →</button>` : ''}
+      ${allDone ? `<button class="check-btn ready" style="margin-top:16px;background:var(--purple);box-shadow:0 4px 0 #9900CC" onclick="completeLesson()">レッスン完了！</button>` : ''}
+    </div>`;
+  if (isAnswered) showFeedback(readingAnswered[currentQ], q.choices[q.correct], q.ex, true);
+}
+
+function jumpReadingQ(i) { currentQ = i; renderReadingLesson(); }
+
+function checkReadingAnswer(btn, idx, correct) {
+  document.querySelectorAll('#choices .choice').forEach((b, i) => {
+    b.onclick = null; b.disabled = true;
+    if (i === readingQuestions[currentQ].correct) b.classList.add('correct');
+  });
+  if (!correct) btn.classList.add('wrong');
+  readingAnswered[currentQ] = correct;
+  if (correct) { lessonCorrect++; state.totalCorrect++; }
+  else if (state.hearts > 0) state.hearts--;
+  state.totalAnswered++;
+  const q = readingQuestions[currentQ];
+  const allDone = readingAnswered.filter(x=>x!==undefined).length === readingQuestions.length;
+  showFeedback(correct, q.choices[q.correct], q.ex, true);
+  document.getElementById('fb-next').textContent = allDone ? 'レッスン完了！' : '次の問題 →';
+  document.getElementById('fb-next').onclick = allDone ? completeLesson : () => jumpReadingQ(currentQ+1);
+  saveState();
+}
+
+function selectChoice(btn, idx) {
+  if (answered) return;
+  document.querySelectorAll('#choices .choice').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedChoice = idx;
+  const cb = document.getElementById('check-btn');
+  if (cb) cb.className = 'check-btn ready';
+}
+
+function checkAnswer() {
+  if (selectedChoice === null || answered) return;
+  answered = true;
+  const q = lessonQuestions[currentQ];
+  const correct = selectedChoice === q.correct;
+  document.querySelectorAll('#choices .choice').forEach((b, i) => {
+    b.onclick = null; b.disabled = true;
+    if (i === q.correct) b.classList.add('correct');
+  });
+  document.querySelectorAll('#choices .choice')[selectedChoice].classList.add(correct ? '' : 'wrong');
+  if (correct) { lessonCorrect++; state.totalCorrect++; }
+  else if (state.hearts > 0) state.hearts--;
+  state.totalAnswered++;
+  showFeedback(correct, q.choices[q.correct], currentLesson === 'listen' ? q.ex : '', false);
+  saveState();
+}
+
+function showFeedback(correct, correctAnswer, explanation, isReading) {
+  const bar = document.getElementById('feedback-bar');
+  const title = document.getElementById('fb-title');
+  const body = document.getElementById('fb-body');
+  const next = document.getElementById('fb-next');
+  bar.className = 'feedback-bar show ' + (correct ? 'correct-bar' : 'wrong-bar');
+  title.className = 'fb-title ' + (correct ? 'ok' : 'ng');
+  title.textContent = correct ? '🎉 正解！' : '😢 不正解';
+  body.textContent = correct ? (explanation || '素晴らしい！') : `正解は「${correctAnswer}」${explanation ? '。' + explanation : ''}`;
+  next.className = 'fb-next ' + (correct ? 'ok' : 'ng');
+  if (!isReading) { next.textContent = '次へ →'; next.onclick = nextQuestion; }
+}
+
+function hideFeedback() { document.getElementById('feedback-bar').className = 'feedback-bar'; }
+
+function nextQuestion() {
+  hideFeedback();
+  currentQ++;
+  if (currentQ >= lessonQuestions.length) completeLesson();
+  else renderQuestion();
+}
+
+function completeLesson() {
+  hideFeedback();
+  const total = currentLesson === 'read' ? readingQuestions.length : lessonQuestions.length;
+  const xpEarned = lessonCorrect * 10;
+  state.xp += xpEarned;
+  state.gems += 5;
+  state.lessonsCompleted++;
+  const acc = Math.round(lessonCorrect / total * 100);
+  const stars = acc >= 90 ? 3 : acc >= 60 ? 2 : 1;
+  if (state.unitsProgress[currentLesson] < stars) state.unitsProgress[currentLesson] = stars;
+  saveState();
+  document.getElementById('screen-lesson').innerHTML = `
+    <div class="complete-screen">
+      <div class="complete-emoji">${acc >= 90 ? '🏆' : acc >= 60 ? '⭐' : '👍'}</div>
+      <div class="complete-title">レッスン完了！</div>
+      <div class="complete-sub">${acc >= 90 ? '完璧な出来栄え！' : acc >= 60 ? 'よくできました！' : '次回はもっと頑張ろう！'}</div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-val">+${xpEarned}</div><div class="stat-lbl">XP獲得</div></div>
+        <div class="stat-box"><div class="stat-val">${acc}%</div><div class="stat-lbl">正解率</div></div>
+        <div class="stat-box"><div class="stat-val">⭐${stars}</div><div class="stat-lbl">スター</div></div>
+      </div>
+      <button class="home-btn" onclick="showHome()">ホームへ戻る</button>
+    </div>`;
+}
+
+function setNav(screen) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const nav = document.querySelector('.bottom-nav');
+  if (screen === 'home') {
+    document.getElementById('screen-home').classList.add('active');
+    document.getElementById('nav-home').classList.add('active');
+    nav.style.display = 'flex';
+  } else if (screen === 'profile') {
+    document.getElementById('screen-profile').classList.add('active');
+    document.getElementById('nav-profile').classList.add('active');
+    nav.style.display = 'flex';
+  } else {
+    document.getElementById('screen-lesson').classList.add('active');
+    nav.style.display = 'none';
+  }
+}
+
+function showHome() { hideFeedback(); renderHome(); setNav('home'); }
+function showProfile() { renderProfile(); setNav('profile'); }
+
+loadState();
+renderHome();
+</script>
+</body>
+</html>
