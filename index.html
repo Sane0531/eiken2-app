@@ -58,7 +58,7 @@ body { font-family: 'Nunito', sans-serif; background: #F7F7F7; color: var(--text
 .back-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-light); flex-shrink: 0; }
 .lesson-progress-bar { flex: 1; height: 14px; background: #F0F0F0; border-radius: 99px; overflow: hidden; border: 2px solid var(--border); }
 .lesson-progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width .4s; }
-.lesson-body { padding: 20px; }
+.lesson-body { padding: 20px; padding-bottom: 180px; }
 .lesson-type-badge { display: inline-block; background: var(--green-light); color: var(--green-dark); font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 99px; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
 .lesson-question { font-size: 18px; font-weight: 800; line-height: 1.4; margin-bottom: 8px; }
 .lesson-sub { font-size: 13px; color: var(--text-light); font-weight: 600; font-style: italic; background: #F7F7F7; border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 20px; line-height: 1.6; }
@@ -74,7 +74,7 @@ body { font-family: 'Nunito', sans-serif; background: #F7F7F7; color: var(--text
 .check-btn.ready { background: var(--green); color: #fff; box-shadow: 0 4px 0 var(--green-dark); }
 .check-btn.ready:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--green-dark); }
 .check-btn.disabled { background: #E5E5E5; color: #AFAFAF; box-shadow: 0 4px 0 #CACACA; cursor: default; }
-.feedback-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 720px; padding: 16px 20px 24px; display: none; z-index: 200; }
+.feedback-bar { position: fixed; bottom: 62px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 720px; padding: 16px 20px 20px; display: none; z-index: 200; border-radius: 16px 16px 0 0; }
 .feedback-bar.show { display: block; }
 .feedback-bar.correct-bar { background: var(--green-light); border-top: 3px solid var(--green); }
 .feedback-bar.wrong-bar { background: var(--red-light); border-top: 3px solid var(--red); }
@@ -150,6 +150,8 @@ body { font-family: 'Nunito', sans-serif; background: #F7F7F7; color: var(--text
 /* LISTENING */
 .script-box { background: #F7F7F7; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; font-size: 13px; line-height: 1.8; border: 2px solid var(--border); }
 .audio-player { display: flex; align-items: center; gap: 12px; background: #F0F8FF; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; border: 2px solid #B3E5FC; }
+.rate-btn { padding: 3px 8px; border-radius: 99px; border: 1.5px solid var(--blue); background: transparent; color: var(--blue); font-size: 11px; font-weight: 800; cursor: pointer; font-family: inherit; }
+.rate-btn.rate-active { background: var(--blue); color: #fff; }
 .play-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); border: none; cursor: pointer; font-size: 18px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 .audio-wave { display: flex; align-items: center; gap: 3px; height: 24px; }
 .abar { width: 3px; background: var(--blue); border-radius: 99px; animation: wave 1s ease-in-out infinite; }
@@ -508,13 +510,62 @@ function playSound(type) {
   } catch(e) {}
 }
 let isSpeaking = false;
+let speechRate = 0.88; // デフォルト速度
 
 // ── SPEECH ──
 var playCount = {};
 
 function speakCurrent(btnId) {
   var q = listeningData[currentQ];
-  if (q) speakScript(q.script, btnId);
+  if (!q) return;
+  var cleanedScript = q.script.map(function(line) {
+    return line.replace(/^[A-Z]\s*:\s*/, '');
+  });
+  speakScript(cleanedScript, btnId);
+}
+
+// 起動時に声を確保する
+var voiceA = null; // 声1（例：女性）
+var voiceB = null; // 声2（例：男性）
+
+function loadVoices() {
+  var voices = speechSynth.getVoices();
+  var enVoices = voices.filter(function(v) {
+    return v.lang.startsWith('en') && !v.localService === false || v.lang.startsWith('en');
+  });
+
+  if (enVoices.length === 0) return;
+
+  // 優先する女性・男性の声名リスト
+  var femaleNames = ['Samantha','Karen','Moira','Zira','Victoria','Fiona','Tessa','Hazel','Susan','Catherine','Allison','Ava','Nicky'];
+  var maleNames   = ['Daniel','Alex','Fred','Tom','David','Mark','James','Lee','Oliver','Arthur','Aaron','Gordon','Bob','Bruce'];
+
+  // 女性の声を探す
+  for (var i = 0; i < femaleNames.length; i++) {
+    var found = enVoices.find(function(v) { return v.name.includes(femaleNames[i]); });
+    if (found) { voiceA = found; break; }
+  }
+
+  // 男性の声を探す
+  for (var i = 0; i < maleNames.length; i++) {
+    var found = enVoices.find(function(v) { return v.name.includes(maleNames[i]); });
+    if (found) { voiceB = found; break; }
+  }
+
+  // 見つからなかった場合は先頭2つを使う
+  if (!voiceA && enVoices.length > 0) voiceA = enVoices[0];
+  if (!voiceB && enVoices.length > 1) voiceB = enVoices[1];
+  if (!voiceB && enVoices.length > 0) voiceB = enVoices[0];
+
+  console.log('Voice A:', voiceA ? voiceA.name : 'none');
+  console.log('Voice B:', voiceB ? voiceB.name : 'none');
+}
+
+// 声を読み込む（ブラウザによってタイミングが異なる）
+if (speechSynth.getVoices().length > 0) {
+  loadVoices();
+} else {
+  speechSynth.onvoiceschanged = loadVoices;
 }
 
 function speakScript(lines, btnId) {
@@ -528,10 +579,13 @@ function speakScript(lines, btnId) {
     updatePlayBtn(btnId, false);
     return;
   }
+
+  // 声がまだ読み込まれていなければ再試行
+  if (!voiceA) { loadVoices(); }
+
   isSpeaking = true;
   updatePlayBtn(btnId, true);
 
-  // 各セリフを1つずつ話す（話者交互に速度を少し変える）
   var idx = 0;
   function speakNext() {
     if (idx >= lines.length) {
@@ -542,9 +596,19 @@ function speakScript(lines, btnId) {
     }
     var utter = new SpeechSynthesisUtterance(lines[idx]);
     utter.lang = 'en-US';
-    utter.rate = 0.85;
-    utter.pitch = idx % 2 === 0 ? 1.1 : 0.9;
-    utter.onend = function() { idx++; speakNext(); };
+    utter.rate = speechRate;
+
+    if (idx % 2 === 0) {
+      // 偶数行：声A（女性）
+      if (voiceA) utter.voice = voiceA;
+      utter.pitch = 1.1;
+    } else {
+      // 奇数行：声B（男性）
+      if (voiceB) utter.voice = voiceB;
+      utter.pitch = 0.9;
+    }
+
+    utter.onend = function() { idx++; setTimeout(speakNext, 250); };
     utter.onerror = function() { isSpeaking = false; updatePlayBtn(btnId, false); };
     speechSynth.speak(utter);
   }
@@ -730,7 +794,14 @@ function renderQuestion() {
           '<div style="font-size:11px;color:var(--text-light)">▶ を押して音声を再生（何度でもOK）</div>' +
           '<div id="play-count-' + btnId + '" style="font-size:11px;color:var(--blue);font-weight:700;margin-top:2px"></div>' +
         '</div>' +
-        '<div class="audio-wave" id="audio-wave-' + btnId + '" style="display:none"><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div></div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">' +
+          '<div class="audio-wave" id="audio-wave-' + btnId + '" style="display:none"><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div></div>' +
+          '<div style="display:flex;gap:4px;align-items:center">' +
+            '<button onclick="setRate(0.6)" id="rate-slow" class="rate-btn ' + (speechRate <= 0.65 ? 'rate-active' : '') + '">遅い</button>' +
+            '<button onclick="setRate(0.88)" id="rate-normal" class="rate-btn ' + (speechRate > 0.65 && speechRate < 1.05 ? 'rate-active' : '') + '">普通</button>' +
+            '<button onclick="setRate(1.2)" id="rate-fast" class="rate-btn ' + (speechRate >= 1.05 ? 'rate-active' : '') + '">速い</button>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
       '<div class="script-box">' + q.script.map(function(s) { return '<div>' + s + '</div>'; }).join('') + '</div>' +
       '<div style="font-size:14px;font-weight:800;margin-bottom:14px">Q: ' + q.q + '</div>' +
@@ -784,20 +855,16 @@ function checkVocabAnswer() {
   if (selectedChoice === null || answered) return;
   answered = true;
   var ok = vocabCorrectIdx;
+  var correctText = vocabData[currentQ].choices[vocabData[currentQ].correct];
   document.querySelectorAll('#choices .choice').forEach(function(b, i) {
     b.onclick = null; b.disabled = true;
+    if (b.textContent.trim() === correctText) b.classList.add('correct');
   });
   var selected = document.querySelectorAll('#choices .choice')[selectedChoice];
-  if (ok) { selected.classList.add('correct'); }
-  else {
-    selected.classList.add('wrong');
-    document.querySelectorAll('#choices .choice').forEach(function(b) {
-      if (b.textContent === vocabData[currentQ].choices[vocabData[currentQ].correct]) b.classList.add('correct');
-    });
-  }
+  if (!ok) selected.classList.add('wrong');
   if (ok) { lessonCorrect++; state.totalCorrect++; } else if (state.hearts > 0) state.hearts--;
   state.totalAnswered++;
-  showFeedback(ok, '', '', false);
+  showFeedback(ok, correctText, '', false);
   saveState();
 }
 
@@ -841,7 +908,11 @@ function renderReadingLesson() {
     if (i === currentQ) cls += ' q-active';
     if (readingAnswered[i] === true) cls += ' q-ok';
     else if (readingAnswered[i] === false) cls += ' q-ng';
-    return '<button class="' + cls + '" onclick="jumpReadingQ(' + i + ')">' + (i+1) + '</button>';
+    // 回答済みの問題のみクリック可能
+    var clickable = (readingAnswered[i] !== undefined) || i === currentQ;
+    var onclick = clickable ? 'onclick="jumpReadingQ(' + i + ')"' : '';
+    var style = !clickable ? 'style="cursor:default;opacity:0.4"' : '';
+    return '<button class="' + cls + '" ' + onclick + ' ' + style + '>' + (i+1) + '</button>';
   }).join('');
 
   var choicesHTML = q.choices.map(function(c, i) {
@@ -854,7 +925,7 @@ function renderReadingLesson() {
   }).join('');
 
   var extraBtn = '';
-  if (isAnswered && currentQ < total-1) extraBtn = '<button class="check-btn ready" style="margin-top:16px" onclick="jumpReadingQ(' + (currentQ+1) + ')">次の問題 →</button>';
+  if (isAnswered && currentQ < total-1) extraBtn = '<button class="check-btn ready" style="margin-top:16px" onclick="hideFeedback();jumpReadingQ(' + (currentQ+1) + ')">次の問題 →</button>';
   if (allDone) extraBtn = '<button class="check-btn ready" style="margin-top:16px;background:var(--purple);box-shadow:0 4px 0 #9900CC" onclick="completeLesson()">レッスン完了！</button>';
 
   document.getElementById('screen-lesson').innerHTML =
@@ -876,11 +947,11 @@ function renderReadingLesson() {
     showFeedback(readingAnswered[currentQ], q.choices[q.correct], q.ex, true);
     var nb = document.getElementById('fb-next');
     if (allDone) { nb.textContent = 'レッスン完了！'; nb.onclick = completeLesson; }
-    else { nb.textContent = '次の問題 →'; nb.onclick = function() { jumpReadingQ(currentQ+1); }; }
+    else { nb.textContent = '次の問題 →'; nb.onclick = function() { hideFeedback(); jumpReadingQ(currentQ+1); }; }
   }
 }
 
-function jumpReadingQ(i) { currentQ = i; renderReadingLesson(); }
+function jumpReadingQ(i) { hideFeedback(); currentQ = i; renderReadingLesson(); }
 
 function checkReadingAnswer(btn, idx, ok) {
   document.querySelectorAll('#choices .choice').forEach(function(b, i) {
@@ -896,7 +967,7 @@ function checkReadingAnswer(btn, idx, ok) {
   showFeedback(ok, readingQs[currentQ].choices[readingQs[currentQ].correct], readingQs[currentQ].ex, true);
   var nb = document.getElementById('fb-next');
   if (allDone) { nb.textContent = 'レッスン完了！'; nb.onclick = completeLesson; }
-  else { nb.textContent = '次の問題 →'; nb.onclick = function() { jumpReadingQ(currentQ+1); }; }
+  else { nb.textContent = '次の問題 →'; nb.onclick = function() { hideFeedback(); jumpReadingQ(currentQ+1); }; }
   saveState();
 }
 
